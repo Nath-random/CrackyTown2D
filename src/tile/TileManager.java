@@ -87,6 +87,7 @@ public class TileManager {
 
 
         while (col < gp.maxScreenCol && row < gp.maxScreenRow) {
+
             int tileCode = mapTileNum[col][row];
             g2.drawImage(tile[tileCode].image, x, y, gp.tileSize, gp.tileSize, null);
             col++;
