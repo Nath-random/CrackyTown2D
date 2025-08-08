@@ -1,6 +1,7 @@
 package main;
 
 import entity.Player;
+import tile.TileManager;
 
 import javax.swing.JPanel;
 import java.awt.Dimension;
@@ -23,6 +24,7 @@ public class GamePanel extends JPanel implements Runnable{
     //Frames per second
     int FPS = 60;
 
+    TileManager tileManager = new TileManager(this);
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
     Player player = new Player(this, keyH);
@@ -87,6 +89,8 @@ public class GamePanel extends JPanel implements Runnable{
 //        System.out.println("öppis");
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g; //explicit down-cast
+
+        tileManager.draw(g2);//Layers: die Sachen werden aufeinander gezeichnet. Also muss player nachher kommen
 
         player.draw(g2);
 
