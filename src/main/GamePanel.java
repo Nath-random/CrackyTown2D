@@ -31,9 +31,10 @@ public class GamePanel extends JPanel implements Runnable{
     //Frames per second
     int FPS = 60;
 
-    TileManager tileManager = new TileManager(this);
+    public TileManager tileManager = new TileManager(this);
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
+    public CollisionChecker cChecker = new CollisionChecker(this);
     public Player player = new Player(this, keyH);
 
 
@@ -78,7 +79,7 @@ public class GamePanel extends JPanel implements Runnable{
             }
 
             if (timer >= 1000000000) {
-                System.out.println("In der letzten Sekunde wurden " + drawCount + " Frames gezeichnet.");
+//                System.out.println("In der letzten Sekunde wurden " + drawCount + " Frames gezeichnet.");
                 drawCount = 0;
                 timer = 0;
             }

@@ -23,6 +23,12 @@ public class Player extends Entity {
         screenX = (gp.screenWidth - gp.tileSize) / 2 ; //diese Koordinate ist die Ecke links oben vom Spieler
         screenY = (gp.screenHeight - gp.tileSize) / 2;
 
+        solidArea = new Rectangle(); //sind keine world-Koordinaten, wird beim CollisionChecker umgerechnet
+        solidArea.x = 8; //Die Zahlen sind bereits mit Skalar 3 skaliert
+        solidArea.y = 16;
+        solidArea.width = 32;
+        solidArea.height = 32;
+
         setDefaultValues();
         getPlayerImage();
     }
@@ -55,19 +61,35 @@ public class Player extends Entity {
 
             if (keyH.upPressed) {
                 direction = "up";
-                worldY -= speed; //links oben ist 0 0, darum muss man minus machen
-            }
-            if (keyH.leftPressed) {
+            }else if (keyH.leftPressed) {
                 direction = "left";
-                worldX -= speed;
-            }
-            if (keyH.downPressed) {
+            }else if (keyH.downPressed) {
                 direction = "down";
-                worldY += speed;
-            }
-            if (keyH.rightPressed) {
+            }else if (keyH.rightPressed) {
                 direction = "right";
-                worldX += speed;
+            }
+
+            // CHECK TILE COLLISION
+            collisionOn = false;
+            gp.cChecker.checkTile(this);
+
+//            System.out.println(collisionOn);
+            // Can only move is collision is false
+            if (!collisionOn) {
+                switch(direction) {
+                    case "up":
+                        worldY -= speed; //links oben ist 0 0, darum muss man minus machen
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
+                }
             }
 
             spriteCounter++;
