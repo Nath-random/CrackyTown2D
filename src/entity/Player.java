@@ -20,7 +20,7 @@ public class Player extends Entity {
         this.gp = gp;
         this.keyH = keyH;
 
-        screenX = (gp.screenWidth - gp.tileSize) / 2 ;
+        screenX = (gp.screenWidth - gp.tileSize) / 2 ; //diese Koordinate ist die Ecke links oben vom Spieler
         screenY = (gp.screenHeight - gp.tileSize) / 2;
 
         setDefaultValues();
