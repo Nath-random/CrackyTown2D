@@ -21,6 +21,13 @@ public class GamePanel extends JPanel implements Runnable{
     public final int screenWidth = tileSize * maxScreenCol; // 768 pixels
     public final int screenHeight = tileSize * maxScreenRow; // 576 pixels
 
+    // WORLD SETTINGS
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 50;
+    public final int worldWidth = tileSize * maxWorldCol;
+    public final int worldHeight = tileSize * maxWorldRow;
+
+
     //Frames per second
     int FPS = 60;
 
@@ -90,7 +97,7 @@ public class GamePanel extends JPanel implements Runnable{
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g; //explicit down-cast
 
-        tileManager.draw(g2);//Layers: die Sachen werden aufeinander gezeichnet. Also muss player nachher kommen
+        tileManager.draw(g2, player);//Layers: die Sachen werden aufeinander gezeichnet. Also muss player nachher kommen
 
         player.draw(g2);
 

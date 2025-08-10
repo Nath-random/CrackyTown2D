@@ -13,17 +13,23 @@ public class Player extends Entity {
     GamePanel gp;
     KeyHandler keyH;
 
+    public final int screenX; //final, weil Spieler immer in der Mitte ist, aber der Hintergrund scrollt
+    public final int screenY;
+
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
         this.keyH = keyH;
+
+        screenX = (gp.screenWidth - gp.tileSize) / 2 ;
+        screenY = (gp.screenHeight - gp.tileSize) / 2;
 
         setDefaultValues();
         getPlayerImage();
     }
 
     public void setDefaultValues() {
-        x = 100;
-        y = 100;
+        worldX = gp.tileSize * 23;
+        worldY = gp.tileSize * 21;
         speed = 4;
         direction = "right";
     }
@@ -49,19 +55,19 @@ public class Player extends Entity {
 
             if (keyH.upPressed) {
                 direction = "up";
-                y -= speed; //links oben ist 0 0, darum muss man minus machen
+                worldY -= speed; //links oben ist 0 0, darum muss man minus machen
             }
             if (keyH.leftPressed) {
                 direction = "left";
-                x -= speed;
+                worldX -= speed;
             }
             if (keyH.downPressed) {
                 direction = "down";
-                y += speed;
+                worldY += speed;
             }
             if (keyH.rightPressed) {
                 direction = "right";
-                x += speed;
+                worldX += speed;
             }
 
             spriteCounter++;
@@ -113,7 +119,7 @@ public class Player extends Entity {
                 }
                 break;
         }
-        g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 
 
     }

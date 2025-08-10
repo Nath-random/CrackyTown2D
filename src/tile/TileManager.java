@@ -1,6 +1,7 @@
 package tile;
 
 import main.GamePanel;
+import entity.Player;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -19,10 +20,10 @@ public class TileManager {
         this.gp = gp;
 
         tile = new Tile[100];
-        mapTileNum = new int[gp.maxScreenCol][gp.maxScreenRow];
+        mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImage();
-        loadMap("/maps/map2.txt");
+        loadMap("/maps/worldMap1.txt");
     }
 
     public void loadMap(String mapFilePath) {
@@ -34,11 +35,11 @@ public class TileManager {
             int col = 0;
             int row = 0;
 
-            while (col < gp.maxScreenCol && row < gp.maxScreenRow) {
+            while (col < gp.maxWorldCol && row < gp.maxWorldRow) {
                 String line = br.readLine();
 
-                while (col < gp.maxScreenCol) {
-                    String[] numbers = line.split(" "); //length should be == gp.maxScreenCol
+                while (col < gp.maxWorldCol) {
+                    String[] numbers = line.split(" "); //length should be == gp.maxWorldCol
 
                     int num = Integer.parseInt(numbers[col]);
 
@@ -46,7 +47,7 @@ public class TileManager {
                     col++;
                 }
 
-                if (col == gp.maxScreenCol) {
+                if (col == gp.maxWorldCol) {
                     col = 0;
                     row++;
                 }
@@ -112,6 +113,10 @@ public class TileManager {
             tile[21].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path12.png"));
             tile[22] = new Tile();
             tile[22].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path13.png"));
+            tile[23] = new Tile();
+            tile[23].image = ImageIO.read(getClass().getResourceAsStream("/tiles/stone2.png"));
+            tile[24] = new Tile();
+            tile[24].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wood1.png"));
         } catch (IOException e) {
             System.out.println("Something went wrong when loading the tile PNGs");
             e.printStackTrace();
@@ -119,23 +124,24 @@ public class TileManager {
 
     }
 
-    public void draw(Graphics2D g2) {
+    public void draw(Graphics2D g2, Player player) {
         int col = 0;
         int row = 0;
-        int x = 0;
-        int y = 0;
 
+        int x = - player.worldX + gp.screenWidth / 2; //Position links oben vom screen wo player ist
+        int y = - player.worldY + gp.screenHeight / 2;
+        System.out.println(x + " " + y);
 
-        while (col < gp.maxScreenCol && row < gp.maxScreenRow) {
+        while (col < gp.maxWorldCol && row < gp.maxWorldRow) {
 
             int tileCode = mapTileNum[col][row];
             g2.drawImage(tile[tileCode].image, x, y, gp.tileSize, gp.tileSize, null);
             col++;
             x += gp.tileSize;
 
-            if (col == gp.maxScreenCol) {
+            if (col == gp.maxWorldCol) {
                 col = 0;
-                x = 0;
+                x = - player.worldX + gp.screenWidth / 2;
                 row++;
                 y += gp.tileSize;
             }
