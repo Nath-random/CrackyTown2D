@@ -120,21 +120,28 @@ public class Player extends Entity {
                 case "Key":
                     hasKeys++;
                     gp.obj[i] = null; //delete the key
+                    System.out.println("You now have + " + hasKeys + " keys!");
+                    gp.playSE(0);
                     break;
                 case "Door":
                     if (hasKeys > 0) {
                         gp.obj[i] = null;
                         hasKeys--;
-//                        System.out.println(hasKeys + " Keys left...");
+                        System.out.println(hasKeys + " Keys left...");
+                        gp.playSE(0);
                     }
                     break;
                 case "Chest":
+                    gp.playSE(2);
+                    gp.obj[i] = null;
                     break;
                 case "SlowBoots":
                     speed = 4;
+                    gp.playSE(3);
                     break;
                 case "FastBoots":
                     speed = 17;
+                    gp.playSE(1);
                     break;
             }
         }
