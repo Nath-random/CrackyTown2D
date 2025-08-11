@@ -22,7 +22,7 @@ public class TileManager {
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImage();
-        loadMap("/maps/worldMap1.txt");
+        loadMap("/maps/worldMap2.txt");
     }
 
     public void loadMap(String mapFilePath) {
@@ -70,6 +70,7 @@ public class TileManager {
             tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass1.png"));
             tile[1] = new Tile();
             tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/stone1.png"));
+            tile[1].collision = true;
             tile[2] = new Tile();
             tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water1.png"));
             tile[2].collision = true;
@@ -116,8 +117,13 @@ public class TileManager {
             tile[22].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path13.png"));
             tile[23] = new Tile();
             tile[23].image = ImageIO.read(getClass().getResourceAsStream("/tiles/stone2.png"));
+            tile[23].collision = true;
             tile[24] = new Tile();
             tile[24].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wood1.png"));
+            tile[24].collision = true;
+            tile[25] = new Tile();
+            tile[25].image = ImageIO.read(getClass().getResourceAsStream("/tiles/rock1.png"));
+            tile[25].collision = true;
         } catch (IOException e) {
             System.out.println("Something went wrong when loading the tile PNGs");
             e.printStackTrace();
