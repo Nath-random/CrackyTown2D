@@ -16,6 +16,8 @@ public class Player extends Entity {
     public final int screenX; //final, weil Spieler immer in der Mitte ist, aber der Hintergrund scrollt
     public final int screenY;
 
+    public int hasKeys = 0;
+
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
         this.keyH = keyH;
@@ -26,6 +28,8 @@ public class Player extends Entity {
         solidArea = new Rectangle(); //sind keine world-Koordinaten, wird beim CollisionChecker umgerechnet
         solidArea.x = 8; //Die Zahlen sind bereits mit Skalar 3 skaliert
         solidArea.y = 16;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
         solidArea.width = 32;
         solidArea.height = 32;
 
@@ -73,6 +77,9 @@ public class Player extends Entity {
             collisionOn = false;
             gp.cChecker.checkTile(this);
 
+            // CHECK OBJECT COLLISION
+            int objIndex = gp.cChecker.checkObject(this, true);
+            pickUpObject(objIndex);
 //            System.out.println(collisionOn);
             // Can only move is collision is false
             if (!collisionOn) {
@@ -102,6 +109,32 @@ public class Player extends Entity {
 
 
     }
+
+
+    public void pickUpObject(int i) {
+
+        if (i < 999) {
+            String objectName = gp.obj[i].name;
+
+            switch(objectName) {
+                case "Key":
+                    hasKeys++;
+                    gp.obj[i] = null; //delete the key
+                    break;
+                case "Door":
+                    if (hasKeys > 0) {
+                        gp.obj[i] = null;
+                        hasKeys--;
+//                        System.out.println(hasKeys + " Keys left...");
+                    }
+                    break;
+                case "Chest":
+                    break;
+            }
+        }
+    }
+
+
 
     public void draw(Graphics2D g2) {
 
