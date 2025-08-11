@@ -38,7 +38,7 @@ public class GamePanel extends JPanel implements Runnable{
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetSetter aSetter = new AssetSetter(this);
     public Player player = new Player(this, keyH);
-    public SuperObject[] obj = new SuperObject[10];
+    public SuperObject[] obj = new SuperObject[15];
 
 
     public GamePanel() {
@@ -87,6 +87,7 @@ public class GamePanel extends JPanel implements Runnable{
             }
 
             if (timer >= 1000000000) {
+                System.out.println("Current Position: x=" + player.worldX / tileSize + ", y=" + player.worldY / tileSize);
 //                System.out.println("In der letzten Sekunde wurden " + drawCount + " Frames gezeichnet.");
                 drawCount = 0;
                 timer = 0;

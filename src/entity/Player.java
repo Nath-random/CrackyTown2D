@@ -130,6 +130,12 @@ public class Player extends Entity {
                     break;
                 case "Chest":
                     break;
+                case "SlowBoots":
+                    speed = 4;
+                    break;
+                case "FastBoots":
+                    speed = 17;
+                    break;
             }
         }
     }
