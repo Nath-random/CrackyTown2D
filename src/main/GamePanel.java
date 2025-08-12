@@ -12,15 +12,21 @@ import java.awt.Graphics2D;
 
 public class GamePanel extends JPanel implements Runnable{
 
+    // DEBUG SETTINGS
+    public boolean showPlayerHitbox = false;
+    boolean showFPS = false;
+    boolean showPosition = false;
+    boolean enableZooming = true;
+
     // SCREEN SETTINGS
     final int originalTileSize = 16; //16x16 tile
     final int scale = 3; //16*3 = 48
 
-    public final int tileSize = originalTileSize * scale;
-    public final int maxScreenCol = 16;
-    public final int maxScreenRow = 12; //Das Spiel hat 16*12 tiles
-    public final int screenWidth = tileSize * maxScreenCol; // 768 pixels
-    public final int screenHeight = tileSize * maxScreenRow; // 576 pixels
+    public int tileSize = originalTileSize * scale;
+    public int maxScreenCol = 16;
+    public int maxScreenRow = 12; //Das Spiel hat 16*12 tiles
+    public int screenWidth = tileSize * maxScreenCol; // 768 pixels
+    public int screenHeight = tileSize * maxScreenRow; // 576 pixels
 
     // WORLD SETTINGS
     public final int maxWorldCol = 100;
@@ -34,7 +40,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     // SYSTEM
     public TileManager tileManager = new TileManager(this);
-    KeyHandler keyH = new KeyHandler();
+    KeyHandler keyH = new KeyHandler(this);
     Sound se = new Sound();
     Sound music = new Sound();
     public CollisionChecker cChecker = new CollisionChecker(this);
@@ -62,6 +68,25 @@ public class GamePanel extends JPanel implements Runnable{
         playMusic(0);
     }
 
+    public void zoom(int i) { //Experimental, causes bugs
+        if (enableZooming) {
+            int oldWorldWidth = tileSize * maxWorldCol;
+            tileSize += i; //i ist 1 oder -1
+            int newWorldWidth = tileSize * maxWorldCol;
+
+            double multiplier = (double) newWorldWidth / oldWorldWidth;
+
+            double newPlayerWorldX = player.worldX * multiplier;
+            double newPlayerWorldY = player.worldY * multiplier;
+            double newPlayerSpeed = newWorldWidth / 600;
+
+            player.worldX = (int) newPlayerWorldX;
+            player.worldY = (int) newPlayerWorldY;
+            player.speed = (int) newPlayerSpeed;
+
+        }
+
+    }
 
     public void startGameThread() {
 
@@ -95,8 +120,13 @@ public class GamePanel extends JPanel implements Runnable{
             }
 
             if (timer >= 1000000000) {
-                System.out.println("Current Position: x=" + player.worldX / tileSize + ", y=" + player.worldY / tileSize);
-//                System.out.println("In der letzten Sekunde wurden " + drawCount + " Frames gezeichnet.");
+                // DEBUG
+                if (showPosition) {
+                    System.out.println("Current Position: x=" + player.worldX / tileSize + ", y=" + player.worldY / tileSize);
+                }
+                if (showFPS) {
+                System.out.println("In der letzten Sekunde wurden " + drawCount + " Frames gezeichnet.");
+                }
                 drawCount = 0;
                 timer = 0;
             }

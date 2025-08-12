@@ -62,6 +62,7 @@ public class Player extends Entity {
     public void update() {
 
         if(keyH.upPressed == true || keyH.leftPressed || keyH.downPressed || keyH.rightPressed) {
+            standCounter = 0;
 
             if (keyH.upPressed) {
                 direction = "up";
@@ -100,11 +101,17 @@ public class Player extends Entity {
             }
 
             spriteCounter++;
-            if (spriteCounter > 10) { //alle 10 Frames
+            if (spriteCounter >= 10) { //alle 10 Frames
                 spriteNum = spriteNum == 1 ? 2 : 1; //wechselt hin und her
                 spriteCounter = 0;
             }
 
+        } else { // Stand still position
+            standCounter++;
+
+            if (standCounter >= 20) {
+                spriteNum = 1;
+            }
         }
 
 
@@ -141,7 +148,7 @@ public class Player extends Entity {
                     System.out.println("you opened the fools chest");
                     break;
                 case "SlowBoots":
-                    speed = 4;
+                    speed = 2;
                     gp.ui.showMessage("You are now slow");
                     gp.stopMusic();
                     gp.playSE(3);
@@ -198,6 +205,11 @@ public class Player extends Entity {
         }
         g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 
+        // Show Hitbox
+        if (gp.showPlayerHitbox) {
+            g2.setColor(Color.red);
+            g2.drawRect(solidArea.x + screenX, solidArea.y + screenY, solidArea.width, solidArea.height);
+        }
 
     }
 }
