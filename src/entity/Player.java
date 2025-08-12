@@ -18,6 +18,10 @@ public class Player extends Entity {
 
     public int hasKeys = 0;
 
+    //For tile based movement
+    boolean moving = false;
+    int pixelCounter = 0;
+
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
         this.keyH = keyH;
@@ -33,6 +37,16 @@ public class Player extends Entity {
         solidArea.width = 32;
         solidArea.height = 32;
 
+        //Tile based movement
+        if (gp.tileBasedMovement) {
+            solidArea.x = 1;
+            solidArea.y = 1;
+            solidArea.width = 46;
+            solidArea.height = 46;
+            solidAreaDefaultX = solidArea.x;
+            solidAreaDefaultY = solidArea.y;
+        }
+
         setDefaultValues();
         getPlayerImage();
     }
@@ -42,6 +56,8 @@ public class Player extends Entity {
         worldY = gp.tileSize * 50;
         speed = 4;
         direction = "right";
+
+
     }
 
     public void getPlayerImage() {
@@ -61,7 +77,7 @@ public class Player extends Entity {
 
     public void update() {
 
-        if(keyH.upPressed == true || keyH.leftPressed || keyH.downPressed || keyH.rightPressed) {
+        if(keyH.upPressed || keyH.leftPressed || keyH.downPressed || keyH.rightPressed) {
             standCounter = 0;
 
             if (keyH.upPressed) {
@@ -81,7 +97,7 @@ public class Player extends Entity {
             // CHECK OBJECT COLLISION
             int objIndex = gp.cChecker.checkObject(this, true);
             pickUpObject(objIndex);
-//            System.out.println(collisionOn);
+
             // Can only move is collision is false
             if (!collisionOn) {
                 switch(direction) {
@@ -114,7 +130,76 @@ public class Player extends Entity {
             }
         }
 
+    }
 
+    //Version for tileBased Movement
+    public void updateTileBased() {
+        //wenn spieler sich nicht bewegt, kann er sich in ein neues Feld begeben
+        if (!moving) {
+
+            if(keyH.upPressed || keyH.leftPressed || keyH.downPressed || keyH.rightPressed) {
+                standCounter = 0;
+                moving = true;
+
+                if (keyH.upPressed) {
+                    direction = "up";
+                }else if (keyH.leftPressed) {
+                    direction = "left";
+                }else if (keyH.downPressed) {
+                    direction = "down";
+                }else if (keyH.rightPressed) {
+                    direction = "right";
+                }
+
+                // CHECK TILE COLLISION
+                collisionOn = false;
+                gp.cChecker.checkTile(this);
+
+                // CHECK OBJECT COLLISION
+                int objIndex = gp.cChecker.checkObject(this, true);
+                pickUpObject(objIndex);
+            }  else { // Stand still position
+                standCounter++;
+
+                if (standCounter >= 20) {
+                    spriteNum = 1;
+                }
+            }
+
+
+        }
+
+        if (moving) { //in here key input isn't checked. This results in tile based movement
+            // Can only move is collision is false
+            if (!collisionOn) {
+                switch(direction) {
+                    case "up":
+                        worldY -= speed; //links oben ist 0 0, darum muss man minus machen
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
+                }
+            }
+
+            spriteCounter++;
+            if (spriteCounter >= 10) { //alle 10 Frames
+                spriteNum = spriteNum == 1 ? 2 : 1; //wechselt hin und her
+                spriteCounter = 0;
+            }
+            pixelCounter += speed;
+
+            if (pixelCounter >= 48) { //Speed muss ein Faktor von 48 sein, sonst weicht es vom Grid ab
+                moving = false;
+                pixelCounter = 0;
+            }
+        }
     }
 
 

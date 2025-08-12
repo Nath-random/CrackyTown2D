@@ -3,7 +3,7 @@ package entity;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Entity {
+public abstract class Entity {
 
     public int worldX, worldY;
     public int speed;
@@ -15,7 +15,8 @@ public class Entity {
     public int spriteNum = 1; //wechselt immer hin und her
     public int standCounter = 0;
 
-    public int solidAreaDefaultX, solidAreaDefaultY;
+    public int solidAreaDefaultX, solidAreaDefaultY; //werden benötigt, weil solidArea.x und y beim Collision check verändert werden,
+                            // um die hitbox für die nächste Bewegung vorauszuberechnen und dann wird es wieder auf defaultWert gesetzt.
     public Rectangle solidArea;
     public boolean collisionOn = false;
 }

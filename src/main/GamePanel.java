@@ -18,6 +18,9 @@ public class GamePanel extends JPanel implements Runnable{
     boolean showPosition = false;
     boolean enableZooming = true;
 
+    // GAMEPLAY SETTINGS
+    public boolean tileBasedMovement = true;
+
     // SCREEN SETTINGS
     final int originalTileSize = 16; //16x16 tile
     final int scale = 3; //16*3 = 48
@@ -136,7 +139,14 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void update() {
-        player.update();
+
+        if (tileBasedMovement) {
+            player.updateTileBased();
+        } else {
+            player.update();
+        }
+
+
     }
 
     @Override
