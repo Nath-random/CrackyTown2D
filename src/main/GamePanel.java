@@ -13,13 +13,13 @@ import java.awt.Graphics2D;
 public class GamePanel extends JPanel implements Runnable{
 
     // DEBUG SETTINGS
-    public boolean showPlayerHitbox = false;
+    public boolean showPlayerHitbox = true;
     boolean showFPS = false;
     boolean showPosition = false;
     boolean enableZooming = true;
 
     // GAMEPLAY SETTINGS
-    public boolean tileBasedMovement = true;
+    public boolean tileBasedMovement = false;
 
     // SCREEN SETTINGS
     final int originalTileSize = 16; //16x16 tile

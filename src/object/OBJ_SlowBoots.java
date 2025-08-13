@@ -9,7 +9,7 @@ public class OBJ_SlowBoots extends SuperObject {
 
         name = "SlowBoots";
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("/objects/sampleTexture1.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/objects/slowBoots1.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
