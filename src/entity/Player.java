@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import main.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -61,18 +62,30 @@ public class Player extends Entity {
     }
 
     public void getPlayerImage() {
+        up1 = setupSprite("playerUp1");
+        up2 = setupSprite("playerUp2");
+        left1 = setupSprite("playerLeft1");
+        left2 = setupSprite("playerLeft2");
+        right1 = setupSprite("playerRight1");
+        right2 = setupSprite("playerRight2");
+        down1 = setupSprite("playerDown1");
+        down2 = setupSprite("playerDown2");
+
+    }
+
+    public BufferedImage setupSprite(String imageName) {
+
+        UtilityTool uTool = new UtilityTool();
+        BufferedImage scaledImage = null;
+
         try {
-            up1 = ImageIO.read(getClass().getResourceAsStream("/player/playerUp1.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/player/playerUp2.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("/player/playerLeft1.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/player/playerLeft2.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("/player/playerRight1.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/player/playerRight2.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/player/playerDown1.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/player/playerDown2.png"));
+            scaledImage = ImageIO.read(getClass().getResourceAsStream("/player/" + imageName + ".png"));
+            scaledImage = uTool.scaleImage(scaledImage, gp.tileSize, gp.tileSize);
         } catch (IOException e) {
+            System.out.println("loading the player sprites went wrong :(");
             e.printStackTrace();
         }
+        return scaledImage;
     }
 
     public void update() {
@@ -288,7 +301,7 @@ public class Player extends Entity {
                 }
                 break;
         }
-        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+        g2.drawImage(image, screenX, screenY,null);
 
         // Show Hitbox
         if (gp.showPlayerHitbox) {

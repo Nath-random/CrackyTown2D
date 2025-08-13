@@ -1,6 +1,7 @@
 package object;
 
 import main.GamePanel;
+import main.UtilityTool;
 
 import java.awt.Rectangle;
 import java.awt.Graphics2D;
@@ -15,6 +16,8 @@ public class SuperObject {
     public int solidAreaDefaultX = 0;
     public int solidAreaDefaultY = 0;
 
+    UtilityTool uTool = new UtilityTool();
+
     public void draw(Graphics2D g2, GamePanel gp) {
 
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
@@ -22,7 +25,7 @@ public class SuperObject {
 
         if (screenX > 0 - gp.tileSize && screenX < gp.screenWidth + gp.tileSize
                 && screenY > 0 - gp.tileSize && screenY < gp.screenHeight + gp.tileSize) {
-            g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+            g2.drawImage(image, screenX, screenY, null);
         }
 
 

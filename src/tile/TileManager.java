@@ -1,9 +1,11 @@
 package tile;
 
 import main.GamePanel;
+import main.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.BufferedReader;
@@ -24,6 +26,27 @@ public class TileManager {
         getTileImage();
         loadMap("/maps/worldMap2.txt");
     }
+
+    public void setupTile(int index, String imageFileName, boolean collision) {
+        // Erklärung warum es bei read() getClass benutzt: die read() Methode muss wissen von wo aus der Pfad angegeben wird (relativer Pfad)
+        // aber es wird / benutzt, also ist das egal und es wird der absolute Pfad genutzt
+        // der Ordner res wird speziell als root Ordner erkannt.
+        // man könnte auch z.B. gp.getClass()... schreiben, weil es von da aus auch den res Ordner findet
+        // aber z.B. "testString".getClass()... geht nicht, weil String in einem ganz anderen Package ist
+        UtilityTool uTool = new UtilityTool();
+        try {
+            BufferedImage bufferedImage = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imageFileName + ".png"));
+            bufferedImage = uTool.scaleImage(bufferedImage, gp.tileSize, gp.tileSize);
+            tile[index] = new Tile();
+            tile[index].image = bufferedImage;
+            tile[index].collision = collision;
+
+        } catch (IOException e) {
+            System.out.println("Something went wrong when loading the tile PNGs");
+            e.printStackTrace();
+        }
+    }
+
 
     public void loadMap(String mapFilePath) {
         try {
@@ -60,74 +83,94 @@ public class TileManager {
     }
 
     public void getTileImage() {
-        try {
-            // Erklärung warum es getClass benutzt: die read() Methode muss wissen von wo aus der Pfad angegeben wird (relativer Pfad)
-            // aber es wird / benutzt, also ist das egal und es wird der absolute Pfad genutzt
-            // der Ordner res wird speziell als root Ordner erkannt.
-            // man könnte auch z.B. gp.getClass()... schreiben, weil es von da aus auch den res Ordner findet
-            // aber z.B. "testString".getClass()... geht nicht, weil String in einem ganz anderen Package ist
-            tile[0] = new Tile();
-            tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass1.png"));
-            tile[1] = new Tile();
-            tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/stone1.png"));
-            tile[1].collision = true;
-            tile[2] = new Tile();
-            tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water1.png"));
-            tile[2].collision = true;
-            tile[3] = new Tile();
-            tile[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass2.png"));
-            tile[4] = new Tile();
-            tile[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/dirt1.png"));
-            tile[5] = new Tile();
-            tile[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tree1.png"));
-            tile[5].collision = true;
-            tile[6] = new Tile();
-            tile[6].image = ImageIO.read(getClass().getResourceAsStream("/tiles/flowers1.png"));
-            tile[7] = new Tile();
-            tile[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/flowers2.png"));
-            tile[8] = new Tile();
-            tile[8].image = ImageIO.read(getClass().getResourceAsStream("/tiles/flowers3.png"));
-            tile[9] = new Tile();
-            tile[9].image = ImageIO.read(getClass().getResourceAsStream("/tiles/flowers4.png"));
-            tile[10] = new Tile();
-            tile[10].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path1.png"));
-            tile[11] = new Tile();
-            tile[11].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path2.png"));
-            tile[12] = new Tile();
-            tile[12].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path3.png"));
-            tile[13] = new Tile();
-            tile[13].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path4.png"));
-            tile[14] = new Tile();
-            tile[14].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path5.png"));
-            tile[15] = new Tile();
-            tile[15].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path6.png"));
-            tile[16] = new Tile();
-            tile[16].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path7.png"));
-            tile[17] = new Tile();
-            tile[17].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path8.png"));
-            tile[18] = new Tile();
-            tile[18].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path9.png"));
-            tile[19] = new Tile();
-            tile[19].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path10.png"));
-            tile[20] = new Tile();
-            tile[20].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path11.png"));
-            tile[21] = new Tile();
-            tile[21].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path12.png"));
-            tile[22] = new Tile();
-            tile[22].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path13.png"));
-            tile[23] = new Tile();
-            tile[23].image = ImageIO.read(getClass().getResourceAsStream("/tiles/stone2.png"));
-            tile[23].collision = true;
-            tile[24] = new Tile();
-            tile[24].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wood1.png"));
-            tile[24].collision = true;
-            tile[25] = new Tile();
-            tile[25].image = ImageIO.read(getClass().getResourceAsStream("/tiles/rock1.png"));
-            tile[25].collision = true;
-        } catch (IOException e) {
-            System.out.println("Something went wrong when loading the tile PNGs");
-            e.printStackTrace();
-        }
+
+            setupTile(0, "grass1", false);
+            setupTile(1, "stone1", false);
+            setupTile(2, "water1", true);
+            setupTile(3, "grass2", false);
+            setupTile(4, "dirt1", false);
+            setupTile(5, "tree1", true);
+            setupTile(6, "flowers1", false);
+            setupTile(7, "flowers2", false);
+            setupTile(8, "flowers3", false);
+            setupTile(9, "flowers4", false);
+            setupTile(10, "path1", false);
+            setupTile(11, "path2", false);
+            setupTile(12, "path3", false);
+            setupTile(13, "path4", false);
+            setupTile(14, "path5", false);
+            setupTile(15, "path6", false);
+            setupTile(16, "path7", false);
+            setupTile(17, "path8", false);
+            setupTile(18, "path9", false);
+            setupTile(19, "path10", false);
+            setupTile(20, "path11", false);
+            setupTile(21, "path12", false);
+            setupTile(22, "path13", false);
+            setupTile(23, "stone2", true);
+            setupTile(24, "wood1", true);
+            setupTile(25, "rock1", true);
+
+//            tile[0] = new Tile();
+//            tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass1.png"));
+//            tile[1] = new Tile();
+//            tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/stone1.png"));
+//            tile[1].collision = true;
+//            tile[2] = new Tile();
+//            tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water1.png"));
+//            tile[2].collision = true;
+//            tile[3] = new Tile();
+//            tile[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass2.png"));
+//            tile[4] = new Tile();
+//            tile[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/dirt1.png"));
+//            tile[5] = new Tile();
+//            tile[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tree1.png"));
+//            tile[5].collision = true;
+//            tile[6] = new Tile();
+//            tile[6].image = ImageIO.read(getClass().getResourceAsStream("/tiles/flowers1.png"));
+//            tile[7] = new Tile();
+//            tile[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/flowers2.png"));
+//            tile[8] = new Tile();
+//            tile[8].image = ImageIO.read(getClass().getResourceAsStream("/tiles/flowers3.png"));
+//            tile[9] = new Tile();
+//            tile[9].image = ImageIO.read(getClass().getResourceAsStream("/tiles/flowers4.png"));
+//            tile[10] = new Tile();
+//            tile[10].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path1.png"));
+//            tile[11] = new Tile();
+//            tile[11].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path2.png"));
+//            tile[12] = new Tile();
+//            tile[12].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path3.png"));
+//            tile[13] = new Tile();
+//            tile[13].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path4.png"));
+//            tile[14] = new Tile();
+//            tile[14].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path5.png"));
+//            tile[15] = new Tile();
+//            tile[15].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path6.png"));
+//            tile[16] = new Tile();
+//            tile[16].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path7.png"));
+//            tile[17] = new Tile();
+//            tile[17].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path8.png"));
+//            tile[18] = new Tile();
+//            tile[18].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path9.png"));
+//            tile[19] = new Tile();
+//            tile[19].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path10.png"));
+//            tile[20] = new Tile();
+//            tile[20].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path11.png"));
+//            tile[21] = new Tile();
+//            tile[21].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path12.png"));
+//            tile[22] = new Tile();
+//            tile[22].image = ImageIO.read(getClass().getResourceAsStream("/tiles/path13.png"));
+//            tile[23] = new Tile();
+//            tile[23].image = ImageIO.read(getClass().getResourceAsStream("/tiles/stone2.png"));
+//            tile[23].collision = true;
+//            tile[24] = new Tile();
+//            tile[24].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wood1.png"));
+//            tile[24].collision = true;
+//            tile[25] = new Tile();
+//            tile[25].image = ImageIO.read(getClass().getResourceAsStream("/tiles/rock1.png"));
+//            tile[25].collision = true;
+
+
 
     }
 
@@ -146,7 +189,8 @@ public class TileManager {
 
             if (screenX > 0 - gp.tileSize && screenX < gp.screenWidth + gp.tileSize
                     && screenY > 0 - gp.tileSize && screenY < gp.screenHeight + gp.tileSize) {
-                g2.drawImage(tile[tileCode].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+                //width und height wird weggelassen, weil es schon vorskaliert ist
+                g2.drawImage(tile[tileCode].image, screenX, screenY,null);
             }
             worldCol++;
 

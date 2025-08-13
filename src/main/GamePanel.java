@@ -13,8 +13,9 @@ import java.awt.Graphics2D;
 public class GamePanel extends JPanel implements Runnable{
 
     // DEBUG SETTINGS
-    public boolean showPlayerHitbox = true;
+    public boolean showPlayerHitbox = false;
     boolean showFPS = false;
+    boolean showDrawTime = false;
     boolean showPosition = false;
     boolean enableZooming = true;
 
@@ -151,12 +152,18 @@ public class GamePanel extends JPanel implements Runnable{
 
     @Override
     public void paintComponent(Graphics g) {
-//        System.out.println("öppis");
+
+        // DEBUG: Laufzeitmessung für 1 Frame
+        long drawStart = System.nanoTime();
+
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g; //explicit down-cast
 
+
+        // TILES
         tileManager.draw(g2);//Layers: die Sachen werden aufeinander gezeichnet. Also muss player nachher kommen
 
+        //OBJECTS
         for (int i = 0; i < obj.length; i++) {
             if (obj[i] != null) {
                 obj[i].draw(g2, this);
@@ -169,8 +176,16 @@ public class GamePanel extends JPanel implements Runnable{
         // UI
         ui.draw(g2);
 
+        // DEBUG
+        long drawEnd = System.nanoTime();
+        if (showDrawTime) {
+            g2.setColor(Color.white);
+            g2.drawString("Draw Time: " + (drawEnd -drawStart), 10, 400);
+        }
+
 
         g2.dispose(); // Löschen für bessere Performance
+
     }
 
     public void playMusic(int i) {

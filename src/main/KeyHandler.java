@@ -36,11 +36,17 @@ public class KeyHandler implements KeyListener {
             rightPressed = true;
         }
 
+        // Zoom
         if (code == KeyEvent.VK_UP) { //Taste UP gedrückt Zoom in
             gp.zoom(1);
         }
         if (code == KeyEvent.VK_DOWN) { //Taste DOWN gedrückt Zoom out
             gp.zoom(-1);
+        }
+
+        // Debug
+        if (code == KeyEvent.VK_T) {
+            gp.showDrawTime = true;
         }
 
     }
@@ -61,6 +67,11 @@ public class KeyHandler implements KeyListener {
         }
         if (code == KeyEvent.VK_D) {
             rightPressed = false;
+        }
+
+        // Debug
+        if (code == KeyEvent.VK_T) {
+            gp.showDrawTime = false;
         }
     }
 }
