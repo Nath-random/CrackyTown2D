@@ -36,7 +36,7 @@ public class AssetSetter {
         gp.obj[4].worldX = 54 * gp.tileSize;
         gp.obj[4].worldY = 12 * gp.tileSize;
 
-        gp.obj[5] = new OBJ_Chest(gp);
+        gp.obj[5] = new OBJ_FastBoots(gp);
         gp.obj[5].worldX = 59 * gp.tileSize;
         gp.obj[5].worldY = 55 * gp.tileSize;
 
@@ -56,13 +56,13 @@ public class AssetSetter {
         gp.obj[9].worldX = 76 * gp.tileSize;
         gp.obj[9].worldY = 52 * gp.tileSize;
 
-        gp.obj[10] = new OBJ_SlowBoots(gp);
-        gp.obj[10].worldX = 60 * gp.tileSize;
-        gp.obj[10].worldY = 48 * gp.tileSize;
+//        gp.obj[10] = new OBJ_SlowBoots(gp);
+//        gp.obj[10].worldX = 60 * gp.tileSize;
+//        gp.obj[10].worldY = 48 * gp.tileSize;
 
-        gp.obj[11] = new OBJ_FastBoots(gp);
-        gp.obj[11].worldX = 62 * gp.tileSize;
-        gp.obj[11].worldY = 48 * gp.tileSize;
+//        gp.obj[11] = new OBJ_FastBoots(gp);
+//        gp.obj[11].worldX = 62 * gp.tileSize;
+//        gp.obj[11].worldY = 48 * gp.tileSize;
 
     }
 }

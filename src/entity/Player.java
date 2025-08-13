@@ -258,7 +258,7 @@ public class Player extends Entity {
                     gp.ui.showMessage("You are now slow");
                     gp.stopMusic();
                     gp.playSE(3);
-//                    gp.ui.gameFinished =  true;
+                    gp.ui.gameFinished =  true;
                     break;
                 case "FastBoots":
                     spriteOverride = "FastBoots";

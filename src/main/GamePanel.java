@@ -1,6 +1,7 @@
 package main;
 
 import entity.Player;
+import enums.GameState;
 import object.SuperObject;
 import tile.TileManager;
 
@@ -52,8 +53,10 @@ public class GamePanel extends JPanel implements Runnable{
     public UI ui = new UI(this);
     Thread gameThread;
 
+    // GAME STATE
+    public GameState gameState;
 
-    // ENTITY AND OBJECTS
+    // ENTITIES AND OBJECTS
     public Player player = new Player(this, keyH);
     public SuperObject[] obj = new SuperObject[15];
 
@@ -70,6 +73,7 @@ public class GamePanel extends JPanel implements Runnable{
     public void setUpGame() {
         aSetter.setObject();
         playMusic(0);
+        gameState = GameState.PLAY;
     }
 
     public void zoom(int i) { //Experimental, causes bugs
@@ -141,12 +145,17 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void update() {
 
-        if (tileBasedMovement) {
-            player.updateTileBased();
-        } else {
-            player.update();
+        if (gameState == GameState.PLAY) {
+            if (tileBasedMovement) {
+                player.updateTileBased();
+            } else {
+                player.update();
+            }
         }
 
+        if (gameState == GameState.PAUSE) {
+            // Do nothing
+        }
 
     }
 

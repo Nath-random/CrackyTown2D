@@ -1,5 +1,7 @@
 package main;
 
+import enums.GameState;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -18,6 +20,7 @@ public class KeyHandler implements KeyListener {
 
     }
 
+    //Diese Methode wird bei einer positiven Flanke einmal aufgerufen
     @Override
     public void keyPressed(KeyEvent e) {
 
@@ -44,6 +47,15 @@ public class KeyHandler implements KeyListener {
             gp.zoom(-1);
         }
 
+        // PAUSE AND RESUME GAME
+        if (code == KeyEvent.VK_P) {
+            if (gp.gameState == GameState.PLAY) {
+                gp.gameState = GameState.PAUSE;
+            } else if (gp.gameState == GameState.PAUSE) {
+                gp.gameState = GameState.PLAY;
+            }
+        }
+
         // Debug
         if (code == KeyEvent.VK_T) {
             gp.showDrawTime = true;
@@ -51,6 +63,8 @@ public class KeyHandler implements KeyListener {
 
     }
 
+    // Wenn man raus-tabt und erst dann eine Taste loslässt, dann wird diese Methode nicht aufgerufen
+    // Darum bewegt sich der Spieler weiter obwohl man loslässt
     @Override
     public void keyReleased(KeyEvent e) {
 
