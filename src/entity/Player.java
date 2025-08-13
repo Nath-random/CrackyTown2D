@@ -14,6 +14,10 @@ public class Player extends Entity {
     GamePanel gp;
     KeyHandler keyH;
 
+    BufferedImage slowShoe, fastShoe;
+
+    String spriteOverride = null; // null bedeutet: kein Override
+
     public final int screenX; //final, weil Spieler immer in der Mitte ist, aber der Hintergrund scrollt
     public final int screenY;
 
@@ -70,6 +74,9 @@ public class Player extends Entity {
         right2 = setupSprite("playerRight2");
         down1 = setupSprite("playerDown1");
         down2 = setupSprite("playerDown2");
+
+        slowShoe = setupSprite("playerShoe1");
+        fastShoe = setupSprite("playerShoe2");
 
     }
 
@@ -247,14 +254,16 @@ public class Player extends Entity {
                     break;
                 case "SlowBoots":
                     speed = 2;
+                    spriteOverride = "SlowBoots";
                     gp.ui.showMessage("You are now slow");
                     gp.stopMusic();
                     gp.playSE(3);
-                    gp.ui.gameFinished =  true;
+//                    gp.ui.gameFinished =  true;
                     break;
                 case "FastBoots":
-                    gp.playSE(1);
+                    spriteOverride = "FastBoots";
                     speed = 17;
+                    gp.playSE(1);
                     gp.ui.showMessage("You are now super fast!");
                     break;
             }
@@ -301,6 +310,14 @@ public class Player extends Entity {
                 }
                 break;
         }
+
+        //Sprite Override
+        if ("SlowBoots".equals(spriteOverride)) {
+            image = slowShoe;
+        } else if ("FastBoots".equals(spriteOverride)) {
+            image = fastShoe;
+        }
+
         g2.drawImage(image, screenX, screenY,null);
 
         // Show Hitbox
