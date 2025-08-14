@@ -11,24 +11,23 @@ import java.io.IOException;
 
 public class Player extends Entity {
 
-    GamePanel gp;
     KeyHandler keyH;
 
     BufferedImage slowShoe, fastShoe;
 
     String spriteOverride = null; // null bedeutet: kein Override
 
-    public final int screenX; //final, weil Spieler immer in der Mitte ist, aber der Hintergrund scrollt
-    public final int screenY;
+    public  int screenX; //final, weil Spieler immer in der Mitte ist, aber der Hintergrund scrollt
+    public  int screenY;
 
-    public int hasKeys = 0;
 
     //For tile based movement
     boolean moving = false;
     int pixelCounter = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
-        this.gp = gp;
+
+        super(gp);
         this.keyH = keyH;
 
         screenX = (gp.screenWidth - gp.tileSize) / 2 ; //diese Koordinate ist die Ecke links oben vom Spieler
@@ -95,6 +94,7 @@ public class Player extends Entity {
         return scaledImage;
     }
 
+    @Override
     public void update() {
 
         if(keyH.upPressed || keyH.leftPressed || keyH.downPressed || keyH.rightPressed) {
@@ -117,6 +117,10 @@ public class Player extends Entity {
             // CHECK OBJECT COLLISION
             int objIndex = gp.cChecker.checkObject(this, true);
             pickUpObject(objIndex);
+
+            // CHECK NPS COLLISION
+            int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+            interactNPC(npcIndex);
 
             // Can only move is collision is false
             if (!collisionOn) {
@@ -225,53 +229,61 @@ public class Player extends Entity {
 
     public void pickUpObject(int i) {
 
-        if (i < 999) {
-            String objectName = gp.obj[i].name;
+//        if (i < 999) {
+//            String objectName = gp.obj[i].name;
+//
+//            switch(objectName) {
+//                case "Key":
+//                    gp.playSE(0);
+//                    hasKeys++;
+//                    gp.obj[i] = null; //delete the key
+//                    gp.ui.showMessage("You got a brand new key!");
+////                    System.out.println("You now have + " + hasKeys + " keys!");
+//                    break;
+//                case "Door":
+//                    if (hasKeys > 0) {
+//                        gp.playSE(0);
+//                        gp.obj[i] = null;
+//                        hasKeys--;
+//                        gp.ui.showMessage("You used a key!");
+////                        System.out.println(hasKeys + " Keys left...");
+//                    } else {
+//                        gp.ui.showMessage("You need a key... Trottel");
+//                    }
+//                    break;
+//                case "Chest":
+//                    gp.playSE(2);
+//                    gp.obj[i] = null;
+//                    System.out.println("you opened the fools chest");
+//                    break;
+//                case "SlowBoots":
+//                    speed = 2;
+//                    spriteOverride = "SlowBoots";
+//                    gp.ui.showMessage("You are now slow");
+//                    gp.stopMusic();
+//                    gp.playSE(3);
+//                    gp.ui.gameFinished =  true;
+//                    break;
+//                case "FastBoots":
+//                    spriteOverride = "FastBoots";
+//                    speed = 17;
+//                    gp.playSE(1);
+//                    gp.ui.showMessage("You are now super fast!");
+//                    break;
+//            }
+//        }
+    }
 
-            switch(objectName) {
-                case "Key":
-                    gp.playSE(0);
-                    hasKeys++;
-                    gp.obj[i] = null; //delete the key
-                    gp.ui.showMessage("You got a brand new key!");
-//                    System.out.println("You now have + " + hasKeys + " keys!");
-                    break;
-                case "Door":
-                    if (hasKeys > 0) {
-                        gp.playSE(0);
-                        gp.obj[i] = null;
-                        hasKeys--;
-                        gp.ui.showMessage("You used a key!");
-//                        System.out.println(hasKeys + " Keys left...");
-                    } else {
-                        gp.ui.showMessage("You need a key... Trottel");
-                    }
-                    break;
-                case "Chest":
-                    gp.playSE(2);
-                    gp.obj[i] = null;
-                    System.out.println("you opened the fools chest");
-                    break;
-                case "SlowBoots":
-                    speed = 2;
-                    spriteOverride = "SlowBoots";
-                    gp.ui.showMessage("You are now slow");
-                    gp.stopMusic();
-                    gp.playSE(3);
-                    gp.ui.gameFinished =  true;
-                    break;
-                case "FastBoots":
-                    spriteOverride = "FastBoots";
-                    speed = 17;
-                    gp.playSE(1);
-                    gp.ui.showMessage("You are now super fast!");
-                    break;
-            }
+
+    public void interactNPC(int i) {
+        if (i != 999) {
+            System.out.println("äöör");
         }
     }
 
 
 
+    @Override
     public void draw(Graphics2D g2) {
 
         BufferedImage image = null;
@@ -321,7 +333,7 @@ public class Player extends Entity {
         g2.drawImage(image, screenX, screenY,null);
 
         // Show Hitbox
-        if (gp.showPlayerHitbox) {
+        if (gp.showEntityHitbox) {
             g2.setColor(Color.red);
             g2.drawRect(solidArea.x + screenX, solidArea.y + screenY, solidArea.width, solidArea.height);
         }

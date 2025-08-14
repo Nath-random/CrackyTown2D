@@ -1,5 +1,6 @@
 package main;
 
+import entity.Entity;
 import entity.Player;
 import enums.GameState;
 import object.SuperObject;
@@ -14,11 +15,11 @@ import java.awt.Graphics2D;
 public class GamePanel extends JPanel implements Runnable{
 
     // DEBUG SETTINGS
-    public boolean showPlayerHitbox = false;
+    public boolean showEntityHitbox = false;
     boolean showFPS = false;
     boolean showDrawTime = false;
     boolean showPosition = false;
-    boolean enableZooming = true;
+    boolean enableZooming = false;
 
     // GAMEPLAY SETTINGS
     public boolean tileBasedMovement = false;
@@ -29,7 +30,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     public int tileSize = originalTileSize * scale;
     public int maxScreenCol = 16;
-    public int maxScreenRow = 12; //Das Spiel hat 16*12 tiles
+    public int maxScreenRow = 12; //Das Spiel hat 16 * 12 tiles
     public int screenWidth = tileSize * maxScreenCol; // 768 pixels
     public int screenHeight = tileSize * maxScreenRow; // 576 pixels
 
@@ -58,6 +59,8 @@ public class GamePanel extends JPanel implements Runnable{
 
     // ENTITIES AND OBJECTS
     public Player player = new Player(this, keyH);
+    public Entity[] npc = new Entity[20];
+
     public SuperObject[] obj = new SuperObject[15];
 
 
@@ -71,9 +74,10 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void setUpGame() {
-        aSetter.setObject();
-        playMusic(0);
         gameState = GameState.PLAY;
+        aSetter.setObject();
+        aSetter.setNPC();
+        playMusic(0);
     }
 
     public void zoom(int i) { //Experimental, causes bugs
@@ -150,6 +154,13 @@ public class GamePanel extends JPanel implements Runnable{
                 player.updateTileBased();
             } else {
                 player.update();
+
+            }
+        }
+
+        for (int i = 0; i < npc.length; i++) {
+            if (npc[i] != null) {
+                npc[i].update();
             }
         }
 
@@ -161,6 +172,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     @Override
     public void paintComponent(Graphics g) {
+
 
         // DEBUG: Laufzeitmessung für 1 Frame
         long drawStart = System.nanoTime();
@@ -179,10 +191,17 @@ public class GamePanel extends JPanel implements Runnable{
             }
         }
 
+        // NPC
+        for (int i = 0; i < npc.length; i++) {
+            if (npc[i] != null) {
+                npc[i].draw(g2);
+            }
+        }
+
         // PLAYER
         player.draw(g2);
 
-        // UI
+         // UI
         ui.draw(g2);
 
         // DEBUG
