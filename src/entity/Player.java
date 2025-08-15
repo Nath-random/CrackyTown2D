@@ -1,5 +1,6 @@
 package entity;
 
+import enums.GameState;
 import main.GamePanel;
 import main.KeyHandler;
 import main.UtilityTool;
@@ -277,8 +278,15 @@ public class Player extends Entity {
 
     public void interactNPC(int i) {
         if (i != 999) {
-            System.out.println("äöör");
+            if (gp.keyH.enterPressed) {
+                gp.gameState = GameState.DIALOGUE;
+                gp.npc[i].speak();
+            } else {
+                gp.ui.hintMessage = "press Enter to speak";
+                gp.ui.hintFramesLeft = 5;
+            }
         }
+        gp.keyH.enterPressed = false; //sonst macht es grad mehrere Dialoge
     }
 
 
@@ -339,4 +347,12 @@ public class Player extends Entity {
         }
 
     }
+
+    //Player is the only Entity that doesn't need those
+    @Override
+    public void setAction() {
+
+    }
+
+
 }

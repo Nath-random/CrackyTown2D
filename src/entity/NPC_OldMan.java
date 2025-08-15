@@ -19,6 +19,7 @@ public class NPC_OldMan extends Entity {
         speed = 1;
 
         getNPCImage();
+        setDialogue();
     }
 
 
@@ -50,6 +51,18 @@ public class NPC_OldMan extends Entity {
         return scaledImage;
     }
 
+    public void setDialogue() {
+        dialogues[0] = "Press Enter zum Quittieren!!\nThen talk to me again";
+        dialogues[1] = "Willkommen auf der Cracky-Insel, \nin 130 Jahren wird hier die \nMetropole Cracky-Town entstehen";
+        dialogues[2] = "Ich komme aus dem Jahr 2040.\nIn der Zukunft sehen alle so aus wie ich.";
+        dialogues[3] = "Ich heisse übrigens Yuul";
+        dialogues[4] = "Leider ist meine Zeitmaschine kaputt.\nEs ist nicht möglich sie zu reparieren.\nSie wird erst 2040 wieder erfunden.";
+        dialogues[5] = "Bis dahin müssen wir Cracky-Town\n selber wieder aufbauen.\nBist du dabei? Dann drücke alt+f4!";
+        dialogues[6] = "I bi dumm :(";
+        dialogues[7] = "wennd nomol machsch stürtzts ab!!";
+    }
+
+
     @Override
     public void setAction() {
         npcActionCounter++;
@@ -80,6 +93,8 @@ public class NPC_OldMan extends Entity {
 
 
     }
+
+
 
 
 }

@@ -17,7 +17,6 @@ public class GamePanel extends JPanel implements Runnable{
     // DEBUG SETTINGS
     public boolean showEntityHitbox = false;
     boolean showFPS = false;
-    boolean showDrawTime = false;
     boolean showPosition = false;
     boolean enableZooming = false;
 
@@ -46,7 +45,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     // SYSTEM
     public TileManager tileManager = new TileManager(this);
-    KeyHandler keyH = new KeyHandler(this);
+    public KeyHandler keyH = new KeyHandler(this);
     Sound se = new Sound();
     Sound music = new Sound();
     public CollisionChecker cChecker = new CollisionChecker(this);
@@ -174,8 +173,6 @@ public class GamePanel extends JPanel implements Runnable{
     public void paintComponent(Graphics g) {
 
 
-        // DEBUG: Laufzeitmessung für 1 Frame
-        long drawStart = System.nanoTime();
 
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g; //explicit down-cast
@@ -204,12 +201,6 @@ public class GamePanel extends JPanel implements Runnable{
          // UI
         ui.draw(g2);
 
-        // DEBUG
-        long drawEnd = System.nanoTime();
-        if (showDrawTime) {
-            g2.setColor(Color.white);
-            g2.drawString("Draw Time: " + (drawEnd -drawStart), 10, 400);
-        }
 
 
         g2.dispose(); // Löschen für bessere Performance

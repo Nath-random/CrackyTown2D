@@ -7,7 +7,7 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 
-    public boolean upPressed, leftPressed, downPressed, rightPressed;
+    public boolean upPressed, leftPressed, downPressed, rightPressed, enterPressed;
 
     GamePanel gp;
 
@@ -26,40 +26,66 @@ public class KeyHandler implements KeyListener {
 
         int code = e.getKeyCode();
 
-        if (code == KeyEvent.VK_W) { //Taste W gedrückt UP
-            upPressed = true;
-        }
-        if (code == KeyEvent.VK_A) { //Taste A gedrückt LEFT
-            leftPressed = true;
-        }
-        if (code == KeyEvent.VK_S) { //Taste S gedrückt DOWN
-            downPressed = true;
-        }
-        if (code == KeyEvent.VK_D) { //Taste D gedrückt RIGHT
-            rightPressed = true;
-        }
+        // PLAY STATE
+        if (gp.gameState == GameState.PLAY) {
+            if (code == KeyEvent.VK_W) { //Taste W gedrückt UP
+                upPressed = true;
+            }
+            if (code == KeyEvent.VK_A) { //Taste A gedrückt LEFT
+                leftPressed = true;
+            }
+            if (code == KeyEvent.VK_S) { //Taste S gedrückt DOWN
+                downPressed = true;
+            }
+            if (code == KeyEvent.VK_D) { //Taste D gedrückt RIGHT
+                rightPressed = true;
+            }
 
-        // Zoom
-        if (code == KeyEvent.VK_UP) { //Taste UP gedrückt Zoom in
-            gp.zoom(1);
-        }
-        if (code == KeyEvent.VK_DOWN) { //Taste DOWN gedrückt Zoom out
-            gp.zoom(-1);
-        }
+            if (code == KeyEvent.VK_ENTER) {
+                enterPressed = true;
+            }
 
-        // PAUSE AND RESUME GAME
-        if (code == KeyEvent.VK_P) {
-            if (gp.gameState == GameState.PLAY) {
+
+            // Zoom
+            if (code == KeyEvent.VK_UP) { //Taste UP gedrückt Zoom in
+                gp.zoom(1);
+            }
+            if (code == KeyEvent.VK_DOWN) { //Taste DOWN gedrückt Zoom out
+                gp.zoom(-1);
+            }
+
+            // PAUSE AND RESUME GAME
+            if (code == KeyEvent.VK_P) {
                 gp.gameState = GameState.PAUSE;
-            } else if (gp.gameState == GameState.PAUSE) {
-                gp.gameState = GameState.PLAY;
+
             }
         }
 
-        // Debug
-        if (code == KeyEvent.VK_T) {
-            gp.showDrawTime = true;
+
+        // PAUSE STATE
+        else if (gp.gameState == GameState.PAUSE) {
+            if (code == KeyEvent.VK_P) {
+                gp.gameState = GameState.PLAY;
+
+            }
+
+
+
         }
+
+
+
+        // DIALOGUE STATE
+        else if (gp.gameState == GameState.DIALOGUE) {
+            if (code == KeyEvent.VK_ENTER) {
+                gp.gameState = GameState.PLAY;
+            }
+
+
+        }
+
+
+
 
     }
 
@@ -82,10 +108,9 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_D) {
             rightPressed = false;
         }
-
-        // Debug
-        if (code == KeyEvent.VK_T) {
-            gp.showDrawTime = false;
+        if (code == KeyEvent.VK_ENTER) {
+            enterPressed = false;
         }
+
     }
 }

@@ -27,6 +27,8 @@ public abstract class Entity {
     public int npcNextAction = 0;
     boolean doNothing = false; //when a npc decides to not move
 
+    String[] dialogues = new String[20];
+    int dialogueIndex = 0;
 
     public Entity (GamePanel gp) {
         this.gp = gp;
@@ -71,8 +73,27 @@ public abstract class Entity {
 
     }
 
-    public void setAction() {
+    public abstract void setAction();
 
+    public void speak() {
+        gp.ui.currentDialogue = dialogues[dialogueIndex];
+        dialogueIndex++;
+
+
+        switch (gp.player.direction) {
+            case "up":
+                direction = "down";
+                break;
+            case "left":
+                direction = "right";
+                break;
+            case "down":
+                direction = "up";
+                break;
+            case "right":
+                direction = "left";
+                break;
+        }
     }
 
     public void draw(Graphics2D g2) {
