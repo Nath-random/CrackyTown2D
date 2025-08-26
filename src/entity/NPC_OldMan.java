@@ -95,6 +95,11 @@ public class NPC_OldMan extends Entity {
     }
 
 
+    @Override
+    public void speak() {
+        super.speak();
+    }
+
 
 
 }

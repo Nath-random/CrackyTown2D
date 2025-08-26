@@ -73,11 +73,11 @@ public class AssetSetter {
         gp.npc[0].worldX = gp.tileSize * 45;
         gp.npc[0].worldY = gp.tileSize * 45;
 
-//        for (int i = 1; i < 1000; i++) {
-//            gp.npc[i] = new NPC_OldMan(gp);
-//            gp.npc[i].worldX = gp.tileSize * 45;
-//            gp.npc[i].worldY = gp.tileSize * 45;
-//        }
+        for (int i = 1; i < 4; i++) {
+            gp.npc[i] = new NPC_OldMan(gp);
+            gp.npc[i].worldX = gp.tileSize * 45;
+            gp.npc[i].worldY = gp.tileSize * 45;
+        }
 
 
     }
