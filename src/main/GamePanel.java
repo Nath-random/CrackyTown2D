@@ -57,7 +57,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     // ENTITIES AND OBJECTS
     public Player player = new Player(this, keyH);
-    public Entity[] npc = new Entity[20];
+    public Entity[] npc = new Entity[1000];
 
     public SuperObject[] obj = new SuperObject[15];
 
@@ -75,7 +75,6 @@ public class GamePanel extends JPanel implements Runnable{
         gameState = GameState.TITLE; //initial
         aSetter.setObject();
         aSetter.setNPC();
-        playMusic(0);
     }
 
     public void zoom(int i) { //Experimental, causes bugs

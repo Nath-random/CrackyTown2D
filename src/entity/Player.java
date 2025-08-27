@@ -15,6 +15,7 @@ public class Player extends Entity {
     KeyHandler keyH;
 
     BufferedImage slowShoe, fastShoe;
+    public BufferedImage newPlayer;
 
     String spriteOverride = null; // null bedeutet: kein Override
 
@@ -77,6 +78,8 @@ public class Player extends Entity {
 
         slowShoe = setupSprite("playerShoe1");
         fastShoe = setupSprite("playerShoe2");
+
+        newPlayer = setupSprite("Wold1");
 
     }
 

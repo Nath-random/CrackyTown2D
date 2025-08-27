@@ -34,6 +34,21 @@ public class KeyHandler implements KeyListener {
             if (code == KeyEvent.VK_S && gp.ui.commandNum < 2) { //Cursor nach unten
                 gp.ui.commandNum++;
             }
+            if (code == KeyEvent.VK_ENTER) { // 3 Options
+                switch (gp.ui.commandNum) {
+                    case 0:
+                        gp.gameState = GameState.PLAY;
+                        gp.playMusic(0);
+                        break;
+                    case 1:
+                        GameCrasher.crashWhileLoop();
+                        break;
+                    case 2:
+                        System.exit(1);
+                        break;
+                }
+
+            }
         }
 
         // PLAY STATE
