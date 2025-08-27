@@ -3,5 +3,6 @@ package enums;
 public enum GameState {
     PLAY,
     PAUSE,
-    DIALOGUE
+    DIALOGUE,
+    TITLE
 }

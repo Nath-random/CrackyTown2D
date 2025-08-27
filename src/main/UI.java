@@ -17,6 +17,8 @@ public class UI {
     public boolean messageOn = false;
     public String message = "";
 
+    public int commandNum = 0;
+
     //alt von v0.1.0
     int messageCounter = 0;
     public boolean gameFinished = false;
@@ -67,6 +69,9 @@ public class UI {
         g2.setColor(Color.white);
 
         switch (gp.gameState) {
+            case GameState.TITLE:
+                drawTitleScreen();
+                break;
             case GameState.PLAY:
                 drawPlayScreen();
                 break;
@@ -76,6 +81,59 @@ public class UI {
             case GameState.DIALOGUE:
                 drawDialogueScreen();
         }
+    }
+
+    public void drawTitleScreen() {
+
+        // Background
+        g2.setColor(new Color(50, 130, 30));
+        g2.fillRect(0,0, gp.screenWidth, gp.screenHeight);
+
+        // Game Title
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
+        String text = "Cracky Town 2D";
+        int x = getCenteredTextX(text);
+        int y = gp.tileSize * 3;
+        g2.setColor(Color.black);
+        g2.drawString(text, x, y);
+
+        // Shadow (eigentlich ist das oben der Schatten)
+        g2.setColor(Color.white);
+        g2.drawString(text, x + 5, y + 5);
+
+        // Player Image
+        x = gp.screenWidth / 2 - gp.tileSize;
+        y += gp.tileSize * 2;
+        g2.drawImage(gp.player.right1, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
+
+
+
+        // Menu and Cursor
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+
+        text = "START GAME";
+        x = getCenteredTextX(text);
+        y += gp.tileSize * 3;
+        g2.drawString(text, x, y);
+        if (commandNum == 0) {
+            g2.drawString(">", x -gp.tileSize, y - 5);
+        }
+
+        text = "CRASH THE GAME";
+        x = getCenteredTextX(text);
+        y += gp.tileSize;
+        g2.drawString(text, x, y);
+        if (commandNum == 1) {
+            g2.drawString(">", x -gp.tileSize, y - 5);
+        }
+        text = "QUIT";
+        x = getCenteredTextX(text);
+        y += gp.tileSize;
+        g2.drawString(text, x, y);
+        if (commandNum == 2) {
+            g2.drawString(">", x -gp.tileSize, y - 5);
+        }
+
     }
 
     public void drawPlayScreen() {
@@ -88,11 +146,6 @@ public class UI {
         int y = gp.screenHeight / 2;
 
         g2.drawString(text, x, y);
-    }
-
-    public int getCenteredTextX(String text) {
-        int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-        return (gp.screenWidth - length) / 2;
     }
 
 
@@ -162,6 +215,12 @@ public class UI {
         if (hintFramesLeft <= 0) {
             hintMessage = "";
         }
+    }
+
+    public int getCenteredTextX(String text) {
+        //gibt ein x zurück sodass der Text genau zentriert in der Mitte ist. Bei drawString ist das x der linke Rand
+        int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+        return (gp.screenWidth - length) / 2;
     }
 
 }

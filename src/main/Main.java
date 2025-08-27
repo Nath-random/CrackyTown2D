@@ -12,6 +12,7 @@ public class Main {
         window.setTitle("Cracky Town 2D");
 
         GamePanel gamePanel = new GamePanel();
+        gamePanel.setUpGame(); //wurde verschoben als Bugfix, weil window.setVisible sonst zu früh painted
         window.add(gamePanel);
 
         window.pack();
@@ -19,8 +20,12 @@ public class Main {
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 
-        gamePanel.setUpGame();
         gamePanel.startGameThread();
     }
 
 }
+
+//Hier werden ab jetzt auch noch Ideen und so in Textform gespeichert, weil es grad praktisch ist es auch im Code zu machen
+// Namensideen: (nicht AI generiert!!)
+// 4-Buchstaben-Namen-Ideen: Wold, Alto, Nout, Chad, Nibs, Tygs, Mlik, Ghik
+// weitere: Gango, Brotis, Schepp

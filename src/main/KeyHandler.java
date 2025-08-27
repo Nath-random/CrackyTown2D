@@ -26,6 +26,16 @@ public class KeyHandler implements KeyListener {
 
         int code = e.getKeyCode();
 
+        // TITLE STATE
+        if (gp.gameState == GameState.TITLE) {
+            if (code == KeyEvent.VK_W && gp.ui.commandNum > 0) { //Cursor nach oben
+                gp.ui.commandNum--;
+            }
+            if (code == KeyEvent.VK_S && gp.ui.commandNum < 2) { //Cursor nach unten
+                gp.ui.commandNum++;
+            }
+        }
+
         // PLAY STATE
         if (gp.gameState == GameState.PLAY) {
             if (code == KeyEvent.VK_W) { //Taste W gedrückt UP
@@ -90,7 +100,7 @@ public class KeyHandler implements KeyListener {
     }
 
     // Wenn man raus-tabt und erst dann eine Taste loslässt, dann wird diese Methode nicht aufgerufen
-    // Darum bewegt sich der Spieler weiter obwohl man loslässt
+    // Darum bewegt sich der Spieler weiter, obwohl man loslässt
     @Override
     public void keyReleased(KeyEvent e) {
 
