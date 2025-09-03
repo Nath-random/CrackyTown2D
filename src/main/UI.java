@@ -3,6 +3,7 @@ package main;
 import enums.GameState;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
@@ -17,7 +18,10 @@ public class UI {
     public boolean messageOn = false;
     public String message = "";
 
+    // title screen
     public int commandNum = 0;
+    public int titleScreenState = 0; // 0: main screen, 1: character selection
+    public BufferedImage chosenCharacter;
 
     //alt von v0.1.0
     int messageCounter = 0;
@@ -84,55 +88,124 @@ public class UI {
     }
 
     public void drawTitleScreen() {
-
-        // Background
-        g2.setColor(new Color(50, 130, 30));
-        g2.fillRect(0,0, gp.screenWidth, gp.screenHeight);
-
-        // Game Title
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
-        String text = "Cracky Town 2D";
-        int x = getCenteredTextX(text);
-        int y = gp.tileSize * 3;
-        g2.setColor(Color.black);
-        g2.drawString(text, x, y);
-
-        // Shadow (eigentlich ist das oben der Schatten)
-        g2.setColor(Color.white);
-        g2.drawString(text, x + 5, y + 5);
-
-        // Player Image
-        x = gp.screenWidth / 2 - gp.tileSize;
-        y += gp.tileSize * 2;
-        g2.drawImage(gp.player.right1, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
-
-
-
-        // Menu and Cursor
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-
-        text = "START GAME";
-        x = getCenteredTextX(text);
-        y += gp.tileSize * 3;
-        g2.drawString(text, x, y);
-        if (commandNum == 0) {
-            g2.drawString(">", x -gp.tileSize, y - 5);
+        if (chosenCharacter == null) {
+            chosenCharacter = gp.player.right1;
         }
 
-        text = "CRASH THE GAME";
-        x = getCenteredTextX(text);
-        y += gp.tileSize;
-        g2.drawString(text, x, y);
-        if (commandNum == 1) {
-            g2.drawString(">", x -gp.tileSize, y - 5);
+
+        if (titleScreenState == 0) {
+            // Background
+            g2.setColor(new Color(50, 130, 30));
+            g2.fillRect(0,0, gp.screenWidth, gp.screenHeight);
+
+            // Game Title
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
+            String text = "Cracky Town 2D";
+            int x = getCenteredTextX(text);
+            int y = gp.tileSize * 3;
+            g2.setColor(Color.black);
+            g2.drawString(text, x, y);
+
+            // Shadow (eigentlich ist das oben der Schatten)
+            g2.setColor(Color.white);
+            g2.drawString(text, x + 5, y + 5);
+
+            // Player Image
+            x = gp.screenWidth / 2 - gp.tileSize;
+            y += gp.tileSize * 2;
+            g2.drawImage(chosenCharacter, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
+
+
+
+            // Menu and Cursor
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+
+            text = "START GAME";
+            x = getCenteredTextX(text);
+            y += gp.tileSize * 3;
+            g2.drawString(text, x, y);
+            if (commandNum == 0) {
+                g2.drawString(">", x - gp.tileSize, y - 5);
+            }
+
+            text = "CRASH THE GAME";
+            x = getCenteredTextX(text);
+            y += gp.tileSize;
+            g2.drawString(text, x, y);
+            if (commandNum == 1) {
+                g2.drawString(">", x - gp.tileSize, y - 5);
+            }
+
+            text = "QUIT";
+            x = getCenteredTextX(text);
+            y += gp.tileSize;
+            g2.drawString(text, x, y);
+            if (commandNum == 2) {
+                g2.drawString(">", x - gp.tileSize, y - 5);
+            }
+        } else if(titleScreenState == 1) {
+            // Background
+            g2.setColor(new Color(10, 40, 5));
+            g2.fillRect(0,0, gp.screenWidth, gp.screenHeight);
+
+            // Game Title
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 60F));
+            String text = "SELECT A CHARACTER";
+            int x = getCenteredTextX(text);
+            int y = gp.tileSize * 3;
+            g2.setColor(Color.black);
+            g2.drawString(text, x, y);
+
+            // Shadow (eigentlich ist das oben der Schatten)
+            g2.setColor(Color.white);
+            g2.drawString(text, x + 5, y + 5);
+
+            // Player Image
+            x = gp.screenWidth / 2 - gp.tileSize;
+            y += gp.tileSize;
+            g2.drawImage(chosenCharacter, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
+
+
+
+            // Menu and Cursor
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+
+            text = "Juul";
+            x = getCenteredTextX(text);
+            y += gp.tileSize * 3;
+            g2.drawString(text, x, y);
+            if (commandNum == 0) {
+                chosenCharacter = gp.player.right1;
+                g2.drawString(">", x - gp.tileSize, y - 5);
+            }
+
+            text = "Wold";
+            x = getCenteredTextX(text);
+            y += gp.tileSize;
+            g2.drawString(text, x, y);
+            if (commandNum == 1) {
+                chosenCharacter = gp.player.newPlayer;
+                g2.drawString(">", x - gp.tileSize, y - 5);
+            }
+
+            text = "Slime";
+            x = getCenteredTextX(text);
+            y += gp.tileSize;
+            g2.drawString(text, x, y);
+            if (commandNum == 2) {
+                chosenCharacter = gp.player.slime;
+                g2.drawString(">", x - gp.tileSize, y - 5);
+            }
+
+            text = "return";
+            x = getCenteredTextX(text);
+            y += gp.tileSize * 2;
+            g2.drawString(text, x, y);
+            if (commandNum == 3) {
+                g2.drawString(">", x - gp.tileSize, y - 5);
+            }
         }
-        text = "QUIT";
-        x = getCenteredTextX(text);
-        y += gp.tileSize;
-        g2.drawString(text, x, y);
-        if (commandNum == 2) {
-            g2.drawString(">", x -gp.tileSize, y - 5);
-        }
+
 
     }
 
@@ -170,7 +243,7 @@ public class UI {
 
     }
 
-
+    //for Dialogue
     public void drawSubWindow(int x, int y, int width, int height) {
 
         Color c = new Color(0, 0, 0, 200);

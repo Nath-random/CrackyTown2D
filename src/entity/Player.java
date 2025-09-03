@@ -15,7 +15,7 @@ public class Player extends Entity {
     KeyHandler keyH;
 
     BufferedImage slowShoe, fastShoe;
-    public BufferedImage newPlayer;
+    public BufferedImage newPlayer, slime;
 
     String spriteOverride = null; // null bedeutet: kein Override
 
@@ -80,6 +80,8 @@ public class Player extends Entity {
         fastShoe = setupSprite("playerShoe2");
 
         newPlayer = setupSprite("Wold1");
+        slime = setupSprite("slime1");
+
 
     }
 
@@ -339,7 +341,11 @@ public class Player extends Entity {
             image = slowShoe;
         } else if ("FastBoots".equals(spriteOverride)) {
             image = fastShoe;
-        }
+        } else if (gp.ui.chosenCharacter == newPlayer) {
+            image = newPlayer;
+        } else if (gp.ui.chosenCharacter == slime) {
+        image = slime;
+    }
 
         g2.drawImage(image, screenX, screenY,null);
 

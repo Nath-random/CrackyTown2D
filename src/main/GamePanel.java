@@ -75,6 +75,7 @@ public class GamePanel extends JPanel implements Runnable{
         gameState = GameState.TITLE; //initial
         aSetter.setObject();
         aSetter.setNPC();
+        playMusic(4);
     }
 
     public void zoom(int i) { //Experimental, causes bugs
@@ -213,7 +214,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         music.setFile(i);
         music.play();
-//        music.loop();
+        music.loop();
     }
 
     public void stopMusic() {

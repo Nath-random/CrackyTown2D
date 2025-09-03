@@ -15,17 +15,16 @@ public class GameCrasher {
 
     public static void anotherGame(){
         Main marin = new Main();
-        marin.main(new String[1]);
+        marin.main(new String[]{"crash"});
     }
 
     public static void crashPC() {
         while(1 > 0) {
-            Main marin = new Main();
-            marin.main(new String[1]);
+            anotherGame();
         }
     }
 
-    public static void crashWhileLoop() { //the only fatal one so far
+    public static void crashWhileLoop() {
         while(true) {
             Object o = new Object();
         }

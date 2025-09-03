@@ -27,7 +27,7 @@ public class KeyHandler implements KeyListener {
         int code = e.getKeyCode();
 
         // TITLE STATE
-        if (gp.gameState == GameState.TITLE) {
+        if (gp.gameState == GameState.TITLE && gp.ui.titleScreenState == 0) {
             if (code == KeyEvent.VK_W && gp.ui.commandNum > 0) { //Cursor nach oben
                 gp.ui.commandNum--;
             }
@@ -37,14 +37,39 @@ public class KeyHandler implements KeyListener {
             if (code == KeyEvent.VK_ENTER) { // 3 Options
                 switch (gp.ui.commandNum) {
                     case 0:
-                        gp.gameState = GameState.PLAY;
-                        gp.playMusic(0);
+                        gp.ui.titleScreenState = 1;
+//                        gp.playMusic(0);
                         break;
                     case 1:
                         GameCrasher.crashWhileLoop();
                         break;
                     case 2:
                         System.exit(1);
+                        break;
+                }
+
+            }
+        } else if (gp.gameState == GameState.TITLE && gp.ui.titleScreenState == 1) {
+            if (code == KeyEvent.VK_W && gp.ui.commandNum > 0) { //Cursor nach oben
+                gp.ui.commandNum--;
+            }
+            if (code == KeyEvent.VK_S && gp.ui.commandNum < 3) { //Cursor nach unten
+                gp.ui.commandNum++;
+            }
+            if (code == KeyEvent.VK_ENTER) { // 3 Options
+                switch (gp.ui.commandNum) {
+                    case 0:
+                        gp.gameState = GameState.PLAY;
+                        break;
+                    case 1:
+                        gp.gameState = GameState.PLAY;
+                        break;
+                    case 2:
+                        gp.gameState = GameState.PLAY;
+                        break;
+                    case 3:
+                        gp.ui.titleScreenState = 0;
+                        gp.ui.commandNum = 0;
                         break;
                 }
 

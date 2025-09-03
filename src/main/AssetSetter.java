@@ -74,7 +74,7 @@ public class AssetSetter {
         gp.npc[0].worldY = gp.tileSize * 45;
 
 
-        for (int i = 1; i < 2; i++) {
+        for (int i = 1; i < 500; i++) {
             gp.npc[i] = new NPC_OldMan(gp);
             gp.npc[i].worldX = gp.tileSize * 45;
             gp.npc[i].worldY = gp.tileSize * 45;
