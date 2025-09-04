@@ -130,6 +130,11 @@ public class Player extends Entity {
             int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
             interactNPC(npcIndex);
 
+            // CHECK EVENTS
+            gp.eHandler.checkEvents();
+
+            gp.keyH.enterPressed = false; //sonst macht es grad mehrere Dialoge bzw. Events
+
             // Can only move is collision is false
             if (!collisionOn) {
                 switch(direction) {
@@ -293,7 +298,6 @@ public class Player extends Entity {
                 gp.ui.hintFramesLeft = 5;
             }
         }
-        gp.keyH.enterPressed = false; //sonst macht es grad mehrere Dialoge
     }
 
 
