@@ -18,21 +18,21 @@ public class AssetSetter {
     public void setObject() {
 
 //        gp.obj[0] = new OBJ_Key(gp);
-//        gp.obj[0].worldX = 25 * gp.tileSize;
-//        gp.obj[0].worldY = 24 * gp.tileSize;
-//
+//        gp.obj[0].worldX = 59 * gp.tileSize;
+//        gp.obj[0].worldY = 45 * gp.tileSize;
+
 //        gp.obj[1] = new OBJ_Key(gp);
-//        gp.obj[1].worldX = 13 * gp.tileSize;
+//        gp.obj[1].worldX = 75 * gp.tileSize;
 //        gp.obj[1].worldY = 42 * gp.tileSize;
-//
+
 //        gp.obj[2] = new OBJ_Key(gp);
 //        gp.obj[2].worldX = 85 * gp.tileSize;
-//        gp.obj[2].worldY = 22 * gp.tileSize;
-//
-//        gp.obj[3] = new OBJ_Chest(gp);
-//        gp.obj[3].worldX = 42 * gp.tileSize;
-//        gp.obj[3].worldY = 23 * gp.tileSize;
-//
+//        gp.obj[2].worldY = 37 * gp.tileSize;
+
+//        gp.obj[3] = new OBJ_Key(gp);
+//        gp.obj[3].worldX = 12 * gp.tileSize;
+//        gp.obj[3].worldY = 45 * gp.tileSize;
+
 //        gp.obj[4] = new OBJ_Chest(gp);
 //        gp.obj[4].worldX = 54 * gp.tileSize;
 //        gp.obj[4].worldY = 12 * gp.tileSize;

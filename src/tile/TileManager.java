@@ -110,6 +110,10 @@ public class TileManager {
             setupTile(23, "stone2", true);
             setupTile(24, "wood1", true);
             setupTile(25, "rock1", true);
+            setupTile(26, "chuehflade", false);
+            setupTile(27, "water2", true);
+            setupTile(28, "teleporter1", false);
+
 
 //            tile[0] = new Tile();
 //            tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass1.png"));

@@ -248,6 +248,7 @@ public class UI {
     }
 
     public void drawDialogueScreen() {
+        drawPlayerLife();
 
         int x = gp.tileSize * 2;
         int y = gp.tileSize;
@@ -320,5 +321,6 @@ public class UI {
         int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         return (gp.screenWidth - length) / 2;
     }
+
 
 }
