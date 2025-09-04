@@ -71,10 +71,18 @@ public class Player extends Entity {
     public void getPlayerImage() {
         up1 = setupSprite("playerUp1");
         up2 = setupSprite("playerUp2");
-        left1 = setupSprite("playerLeft1");
-        left2 = setupSprite("playerLeft2");
-        right1 = setupSprite("playerRight1");
-        right2 = setupSprite("playerRight2");
+
+//        old sprites character:
+//        left1 = setupSprite("playerLeft1");
+//        left2 = setupSprite("playerLeft2");
+//        right1 = setupSprite("playerRight1");
+//        right2 = setupSprite("playerRight2");
+
+        left1 = setupSprite("player2Left1");
+        left2 = setupSprite("player2Left2");
+        right1 = setupSprite("player2Right1");
+        right2 = setupSprite("player2Right2");
+
         down1 = setupSprite("playerDown1");
         down2 = setupSprite("playerDown2");
 
@@ -83,8 +91,6 @@ public class Player extends Entity {
 
         newPlayer = setupSprite("Wold1");
         slime = setupSprite("slime1");
-
-
     }
 
     public BufferedImage setupSprite(String imageName) {
