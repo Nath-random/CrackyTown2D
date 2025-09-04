@@ -1,6 +1,8 @@
 package main;
 
 import enums.GameState;
+import object.OBJ_Heart;
+import object.SuperObject;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -15,6 +17,7 @@ public class UI {
     Font arial_40, arial_80B;
     Font nasa21, paul1V, confessionFull, pixellettersFull;
 
+    //alter code
     public boolean messageOn = false;
     public String message = "";
 
@@ -23,16 +26,15 @@ public class UI {
     public int titleScreenState = 0; // 0: main screen, 1: character selection
     public BufferedImage chosenCharacter;
 
-    //alt von v0.1.0
-    int messageCounter = 0;
-    public boolean gameFinished = false;
-    double playTime;
-
+    //Player Life
+    BufferedImage heart_full, heart_half, heart_blank;
 
     DecimalFormat dFormat = new DecimalFormat("#0.00");
 
+    //Dialog
     public String currentDialogue = "";
 
+    //pop-up message
     public String hintMessage = ""; // e.g. press Enter to speak
     public int hintFramesLeft;
 
@@ -51,15 +53,21 @@ public class UI {
             is = getClass().getResourceAsStream("/fonts/Pixellettersfull-BnJ5.ttf");
             pixellettersFull = Font.createFont(Font.TRUETYPE_FONT, is);
 
-
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
 
         arial_40 = new Font("Arial", Font.PLAIN, 40);
         arial_80B = new Font("Arial", Font.BOLD, 80);
+
+        // CREATE HUD OBJECT
+        SuperObject heart = new OBJ_Heart(gp);
+        heart_full = heart.image1;
+        heart_half = heart.image2;
+        heart_blank = heart.image3;
     }
 
+    //veraltet
     public void showMessage(String text) {
 
         message = text;
@@ -210,10 +218,12 @@ public class UI {
     }
 
     public void drawPlayScreen() {
+        drawPlayerLife();
         drawHint();
     }
 
     public void drawPauseScreen() {
+        drawPlayerLife();
         String text = "Paused";
         int x = getCenteredTextX(text);
         int y = gp.screenHeight / 2;
@@ -221,6 +231,21 @@ public class UI {
         g2.drawString(text, x, y);
     }
 
+    public void drawPlayerLife() {
+        //links oben
+        int x = gp.tileSize / 2;
+        int y = gp.tileSize / 2;
+        for (int i = 0; i < gp.player.maxLife / 2; i++) { //1 Sprite per 2 Life
+            if (gp.player.life >= i * 2 + 2) {
+                g2.drawImage(heart_full, x, y, null);
+            } else if (gp.player.life >= i * 2 + 1) {
+                g2.drawImage(heart_half, x, y, null);
+            } else {
+                g2.drawImage(heart_blank, x, y, null);
+            }
+            x += gp.tileSize;
+        }
+    }
 
     public void drawDialogueScreen() {
 

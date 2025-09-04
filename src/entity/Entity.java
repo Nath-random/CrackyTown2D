@@ -14,21 +14,30 @@ public abstract class Entity {
     public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
     public String direction;
 
+    //Animation für Player
     public int spriteCounter = 0;
     public int spriteNum = 1; //wechselt immer hin und her
     public int standCounter = 0;
 
+    //Collision
     public int solidAreaDefaultX, solidAreaDefaultY; //werden benötigt, weil solidArea.x und y beim Collision check verändert werden,
                             // um die hitbox für die nächste Bewegung vorauszuberechnen und dann wird es wieder auf defaultWert gesetzt.
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48); // Default
     public boolean collisionOn = false;
 
+    //Animation für NPC
     public int npcActionCounter = 0; // zählt wie viele Frames er schon die gleiche action gemacht hat
     public int npcNextAction = 0;
     boolean doNothing = false; //when a npc decides to not move
 
+    //Dialog für NPC
     String[] dialogues = new String[20];
     int dialogueIndex = 0;
+
+    //Character Status
+    public int maxLife;
+    public int life;
+
 
     public Entity (GamePanel gp) {
         this.gp = gp;

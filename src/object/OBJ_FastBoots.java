@@ -13,8 +13,8 @@ public class OBJ_FastBoots extends SuperObject {
 
         name = "FastBoots";
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("/objects/fastBoots1.png"));
-            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
+            image1 = ImageIO.read(getClass().getResourceAsStream("/objects/fastBoots1.png"));
+            image1 = uTool.scaleImage(image1, gp.tileSize, gp.tileSize);
         } catch (IOException e) {
             e.printStackTrace();
         }

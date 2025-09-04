@@ -8,7 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 public class SuperObject {
 
-    public BufferedImage image;
+    public BufferedImage image1, image2, image3;
     public String name;
     public boolean collision = false;
     public int worldX, worldY;
@@ -26,7 +26,7 @@ public class SuperObject {
 
         if (screenX > 0 - gp.tileSize && screenX < gp.screenWidth + gp.tileSize
                 && screenY > 0 - gp.tileSize && screenY < gp.screenHeight + gp.tileSize) {
-            g2.drawImage(image, screenX, screenY, null);
+            g2.drawImage(image1, screenX, screenY, null);
         }
 
 

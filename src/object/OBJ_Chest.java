@@ -14,8 +14,8 @@ public class OBJ_Chest extends SuperObject {
         name = "Chest";
 
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("/objects/chest1.png"));
-            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
+            image1 = ImageIO.read(getClass().getResourceAsStream("/objects/chest1.png"));
+            image1 = uTool.scaleImage(image1, gp.tileSize, gp.tileSize);
         } catch (IOException e) {
             e.printStackTrace();
         }
