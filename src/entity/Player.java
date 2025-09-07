@@ -99,7 +99,8 @@ public class Player extends Entity {
         BufferedImage scaledImage = null;
 
         try {
-            scaledImage = ImageIO.read(getClass().getResourceAsStream("/player/" + imageName + ".png"));
+            String PathLol = "/player/" + imageName + ".png";
+            scaledImage = ImageIO.read(getClass().getResourceAsStream(PathLol));
             scaledImage = uTool.scaleImage(scaledImage, gp.tileSize, gp.tileSize);
         } catch (IOException e) {
             System.out.println("loading the player sprites went wrong :(");
