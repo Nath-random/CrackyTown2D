@@ -4,37 +4,32 @@ import main.GamePanel;
 import main.UtilityTool;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Random;
 
-public class NPC_OldMan extends Entity {
+public class NPC_Professor extends Entity {
 
-
-    public NPC_OldMan (GamePanel gp) {
+    public NPC_Professor(GamePanel gp) {
         super(gp);
 
-        direction = "down";
+        direction = "right";
         speed = 1;
 
         getNPCImage();
         setDialogue();
     }
 
-
     public void getNPCImage() {
         up1 = setupSprite("playerUp1");
         up2 = setupSprite("playerUp2");
-        left1 = setupSprite("playerLeft1");
-        left2 = setupSprite("playerLeft2");
-        right1 = setupSprite("playerRight1");
-        right2 = setupSprite("playerRight2");
+        left1 = setupSprite("profLeft1");
+        left2 = setupSprite("profLeft2");
+        right1 = setupSprite("profRight1");
+        right2 = setupSprite("profRight2");
         down1 = setupSprite("playerDown1");
         down2 = setupSprite("playerDown2");
-
     }
-
 
     public BufferedImage setupSprite(String imageName) {
 
@@ -52,19 +47,13 @@ public class NPC_OldMan extends Entity {
     }
 
     public void setDialogue() {
-        dialogues[0] = "Press Enter zum Quittieren!!\nThen talk to me again";
-        dialogues[1] = "Willkommen auf der Cracky-Insel, \nin 130 Jahren wird hier die \nMetropole Cracky-Town entstehen";
-        dialogues[2] = "Ich komme aus dem Jahr 2040.\nIn der Zukunft sehen alle so aus wie ich.";
-        dialogues[3] = "Ich heisse übrigens Juul";
-        dialogues[4] = "Leider ist meine Zeitmaschine kaputt.\nEs ist nicht möglich sie zu reparieren.\nSie wird erst 2040 wieder erfunden.";
-        dialogues[5] = "Bis dahin müssen wir Cracky-Town\n selber wieder aufbauen.\nBist du dabei? Dann drücke alt+f4!";
-        dialogues[6] = "I bi dumm :(";
-        dialogues[7] = "wennd nomol machsch stürtzts ab!!";
+        dialogues[0] = "Hallo, ich bin der Dokter";
+        dialogues[1] = "Eigentlich bin ich ein Professor, \nich heisse Professor Juul";
     }
-
 
     @Override
     public void setAction() {
+
         npcActionCounter++;
 
         if (npcActionCounter >= npcNextAction) {
@@ -74,14 +63,14 @@ public class NPC_OldMan extends Entity {
             int i = random.nextInt(1,101); // 1 - 100
             doNothing = false;
 
-            if (i <= 40) {
+            if (i <= 60) {
                 doNothing = true;
                 //do nothing
-            } else if (i > 40 && i <= 55) {
+            } else if (i > 60 && i <= 64) {
                 direction = "up";
-            } else if (i > 55 && i <= 70) {
+            } else if (i > 64 && i <= 80) {
                 direction = "left";
-            } else if (i > 70 && i <= 85) {
+            } else if (i > 80 && i <= 84) {
                 direction = "down";
             } else {
                 direction = "right";
@@ -91,15 +80,5 @@ public class NPC_OldMan extends Entity {
             npcNextAction = random.nextInt(5, 90);
         }
 
-
     }
-
-
-    @Override
-    public void speak() {
-        super.speak();
-    }
-
-
-
 }

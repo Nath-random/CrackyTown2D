@@ -73,8 +73,10 @@ public class EventHandler {
 
         if (gp.keyH.enterPressed) {
             gp.gameState = gameState;
-            gp.ui.currentDialogue = "You drank from the piss water!";
+            gp.ui.currentDialogue = "You drank from the piss water!\n(You healed fully up!)";
             gp.player.life = gp.player.maxLife;
+        } else {
+            gp.ui.hintMessage = "Press ENTER to drink!";
         }
     }
 

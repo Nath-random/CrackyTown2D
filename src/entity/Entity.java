@@ -88,7 +88,7 @@ public abstract class Entity {
         gp.ui.currentDialogue = dialogues[dialogueIndex];
         dialogueIndex++;
 
-
+        // NPC looks at player while speaking
         switch (gp.player.direction) {
             case "up":
                 direction = "down";
