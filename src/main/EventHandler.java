@@ -8,36 +8,60 @@ public class EventHandler {
 
     GamePanel gp;
 
-    //Hitbox of all event-triggers
-    Rectangle eventRect;
-    int eventRectDefaultX, eventRectDefaultY;
+    //all EventRects
+    EventRect[][] eventRect;
+
+    int previousEventX, previousEventY;
+    boolean canTouchEvent = true;
 
     public EventHandler(GamePanel gp) {
         this.gp = gp;
 
-        eventRect = new Rectangle();
-        eventRect.x = 23;
-        eventRect.y = 23;
-        eventRect.width = 2;
-        eventRect.height = 2;
-        eventRectDefaultX = eventRect.x;
-        eventRectDefaultY = eventRect.y;
+        eventRect = new EventRect[gp.maxWorldCol][gp.maxWorldRow];
+
+        int col = 0;
+        int row = 0;
+        while (col < gp.maxWorldCol && row < gp.maxWorldRow) {
+            eventRect[col][row] = new EventRect();
+            eventRect[col][row].x = 23;
+            eventRect[col][row].y = 23;
+            eventRect[col][row].width = 2;
+            eventRect[col][row].height = 2;
+            eventRect[col][row].eventRectDefaultX = eventRect[col][row].x;
+            eventRect[col][row].eventRectDefaultY = eventRect[col][row].y;
+            row++;
+            if (row == gp.maxWorldRow) {
+                row = 0;
+                col++;
+            }
+        }
+
     }
 
     // Event Coordinates are coded here
     public void checkEvents() {
 
-        if (hit(60,47, "any")) {
-            chuehFlade(GameState.DIALOGUE);
+        //check if player has moved away from previous event
+        int distanceX = Math.abs(previousEventX - gp.player.worldX);
+        int distanceY = Math.abs(previousEventY - gp.player.worldY);
+        int distance = Math.max(distanceX, distanceY);
+        if (distance >= gp.tileSize) {
+            canTouchEvent = true;
         }
-        if (hit(75, 42, "right")) {
-            healingPool(GameState.DIALOGUE);
-        }
-        if (hit(12, 45, "any")) {
-            teleport(85, 36, GameState.PLAY);
-        }
-        if (hit(85, 37, "any")) {
-            teleport(13, 45, GameState.PLAY);
+
+        if (canTouchEvent) {
+            if (hit(60, 47, "any")) {
+                chuehFlade(60, 47, GameState.DIALOGUE);
+            }
+            if (hit(75, 42, "right")) {
+                healingPool(75, 42, GameState.DIALOGUE);
+            }
+            if (hit(12, 45, "any")) {
+                teleport(85, 36, GameState.PLAY);
+            }
+            if (hit(85, 37, "any")) {
+                teleport(13, 45, GameState.PLAY);
+            }
         }
     }
 
@@ -47,34 +71,41 @@ public class EventHandler {
 
         gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
         gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
-        eventRect.x = eventCol * gp.tileSize + eventRect.x;
-        eventRect.y = eventRow * gp.tileSize + eventRect.y;
+        eventRect[eventCol][eventRow].x = eventCol * gp.tileSize + eventRect[eventCol][eventRow].x;
+        eventRect[eventCol][eventRow].y = eventRow * gp.tileSize + eventRect[eventCol][eventRow].y;
 
-        if (gp.player.solidArea.intersects(eventRect)) {
+        if (gp.player.solidArea.intersects(eventRect[eventCol][eventRow]) && !eventRect[eventCol][eventRow].eventDone) {
             if (gp.player.direction.contentEquals(reqDirection) || reqDirection.contentEquals("any")) {
                 hit = true;
+
+                previousEventX = gp.player.worldX;
+                previousEventY = gp.player.worldY;
             }
         }
 
         gp.player.solidArea.x = gp.player.solidAreaDefaultX;
         gp.player.solidArea.y = gp.player.solidAreaDefaultY;
-        eventRect.x = eventRectDefaultX;
-        eventRect.y = eventRectDefaultY;
+        eventRect[eventCol][eventRow].x = eventRect[eventCol][eventRow].eventRectDefaultX;
+        eventRect[eventCol][eventRow].y = eventRect[eventCol][eventRow].eventRectDefaultY;
         return hit;
     }
 
-    public void chuehFlade(GameState gameState) {
+    public void chuehFlade(int col, int row, GameState gameState) {
         gp.gameState = gameState;
         gp.ui.currentDialogue = "You fall into an Chuehflade";
         gp.player.life -= 1;
+        canTouchEvent = false;
+//        eventRect[col][row].eventDone = true;
     }
 
-    public void healingPool(GameState gameState) {
+    public void healingPool(int col, int row, GameState gameState) {
 
         if (gp.keyH.enterPressed) {
             gp.gameState = gameState;
             gp.ui.currentDialogue = "You drank from the piss water!\n(You healed fully up!)";
             gp.player.life = gp.player.maxLife;
+            eventRect[col][row].eventDone = true;
+            gp.tileManager.mapTileNum[col + 1][row] = 2;
         } else {
             gp.ui.hintMessage = "Press ENTER to drink!";
         }

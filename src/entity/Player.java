@@ -102,7 +102,6 @@ public class Player extends Entity {
 
     @Override
     public void update() {
-
         if(keyH.upPressed || keyH.leftPressed || keyH.downPressed || keyH.rightPressed) {
             standCounter = 0;
 
