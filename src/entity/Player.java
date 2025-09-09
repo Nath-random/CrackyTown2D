@@ -34,12 +34,11 @@ public class Player extends Entity {
 
         solidArea = new Rectangle(); //sind keine world-Koordinaten, wird beim CollisionChecker umgerechnet
         solidArea.x = 8; //Die Zahlen sind bereits mit Skalar 3 skaliert
-        solidArea.y = 16;
+        solidArea.y = 8;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         solidArea.width = 32;
         solidArea.height = 32;
-
         //Tile based movement
         if (gp.tileBasedMovement) {
             solidArea.x = 1;

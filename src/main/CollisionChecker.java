@@ -68,7 +68,6 @@ public class CollisionChecker {
 
         for (int i = 0; i < gp.obj.length; i++) {
             if (gp.obj[i] != null) {
-
                 entity.solidArea.x = entity.worldX + entity.solidArea.x;
                 entity.solidArea.y = entity.worldY + entity.solidArea.y;
 
@@ -238,8 +237,8 @@ public class CollisionChecker {
 
         entity.solidArea.x = entity.solidAreaDefaultX;
         entity.solidArea.y = entity.solidAreaDefaultY;
-        gp.player.solidArea.x = entity.solidAreaDefaultX;
-        gp.player.solidArea.y = entity.solidAreaDefaultY;
+        gp.player.solidArea.x = gp.player.solidAreaDefaultX;
+        gp.player.solidArea.y = gp.player.solidAreaDefaultY;
 
 
 
