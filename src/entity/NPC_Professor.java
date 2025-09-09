@@ -21,34 +21,25 @@ public class NPC_Professor extends Entity {
     }
 
     public void getNPCImage() {
-        up1 = setupSprite("playerUp1");
-        up2 = setupSprite("playerUp2");
-        left1 = setupSprite("profLeft1");
-        left2 = setupSprite("profLeft2");
-        right1 = setupSprite("profRight1");
-        right2 = setupSprite("profRight2");
-        down1 = setupSprite("playerDown1");
-        down2 = setupSprite("playerDown2");
+        up1 = setupSprite("/npc/playerUp1");
+        up2 = setupSprite("/npc/playerUp2");
+        left1 = setupSprite("/npc/profLeft1");
+        left2 = setupSprite("/npc/profLeft2");
+        right1 = setupSprite("/npc/profRight1");
+        right2 = setupSprite("/npc/profRight2");
+        down1 = setupSprite("/npc/playerDown1");
+        down2 = setupSprite("/npc/playerDown2");
     }
 
-    public BufferedImage setupSprite(String imageName) {
-
-        UtilityTool uTool = new UtilityTool();
-        BufferedImage scaledImage = null;
-
-        try {
-            scaledImage = ImageIO.read(getClass().getResourceAsStream("/npc/" + imageName + ".png"));
-            scaledImage = uTool.scaleImage(scaledImage, gp.tileSize, gp.tileSize);
-        } catch (IOException e) {
-            System.out.println("loading the NPC sprites went wrong :(");
-            e.printStackTrace();
-        }
-        return scaledImage;
-    }
 
     public void setDialogue() {
         dialogues[0] = "Hallo, ich bin der Dokter";
         dialogues[1] = "Eigentlich bin ich ein Professor, \nich heisse Professor Juul";
+        dialogues[2] = "Ich gebe dir jetzt ein paar Tipps:\nAlso mit der Taste P kannst du das Spiel\npausieren";
+        dialogues[3] = "Mit Objekten die verdächtig aussehen,\nkannst du interagieren indem\ndu sie anschaust und Enter drückst!";
+        dialogues[4] = "Du willst wissen wieso ich so aussehe?";
+        dialogues[5] = "Gehts noch?!!?\nDieses Kinn hat mich ein Vermögen\ngekostet!";
+        dialogues[6] = "Ich rede nicht mehr mit dir...";
     }
 
     @Override
@@ -66,11 +57,11 @@ public class NPC_Professor extends Entity {
             if (i <= 60) {
                 doNothing = true;
                 //do nothing
-            } else if (i > 60 && i <= 64) {
+            } else if (i > 60 && i <= 62) {
                 direction = "up";
-            } else if (i > 64 && i <= 80) {
+            } else if (i > 62 && i <= 80) {
                 direction = "left";
-            } else if (i > 80 && i <= 84) {
+            } else if (i > 80 && i <= 82) {
                 direction = "down";
             } else {
                 direction = "right";

@@ -1,9 +1,12 @@
 package entity;
 
 import main.GamePanel;
+import main.UtilityTool;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public abstract class Entity {
 
@@ -12,7 +15,7 @@ public abstract class Entity {
     public int speed;
 
     public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
-    public String direction;
+    public String direction = "down";
 
     //Animation für Player
     public int spriteCounter = 0;
@@ -37,6 +40,11 @@ public abstract class Entity {
     //Character Status
     public int maxLife;
     public int life;
+
+    //Für Objects
+    public BufferedImage image1, image2, image3;
+    public String name;
+    public boolean collision = false;
 
 
     public Entity (GamePanel gp) {
@@ -82,7 +90,10 @@ public abstract class Entity {
 
     }
 
-    public abstract void setAction();
+    //for NPCs
+    public void setAction() {
+        return;
+    }
 
     public void speak() {
         gp.ui.currentDialogue = dialogues[dialogueIndex];
@@ -161,6 +172,20 @@ public abstract class Entity {
 
     }
 
+    public BufferedImage setupSprite(String imagePath) {
+
+        UtilityTool uTool = new UtilityTool();
+        BufferedImage scaledImage = null;
+
+        try {
+            scaledImage = ImageIO.read(getClass().getResourceAsStream(imagePath + ".png"));
+            scaledImage = uTool.scaleImage(scaledImage, gp.tileSize, gp.tileSize);
+        } catch (IOException e) {
+            System.out.println("loading the NPC sprites went wrong :(");
+            e.printStackTrace();
+        }
+        return scaledImage;
+    }
 
 
 }

@@ -50,9 +50,9 @@ public class AssetSetter {
 //        gp.obj[7].worldX = 75 * gp.tileSize;
 //        gp.obj[7].worldY = 59 * gp.tileSize;
 //
-//        gp.obj[8] = new OBJ_Door(gp);
-//        gp.obj[8].worldX = 75 * gp.tileSize;
-//        gp.obj[8].worldY = 57 * gp.tileSize;
+        gp.obj[8] = new OBJ_Door(gp);
+        gp.obj[8].worldX = 45 * gp.tileSize;
+        gp.obj[8].worldY = 50 * gp.tileSize;
 //
 //        gp.obj[9] = new OBJ_SlowBoots(gp);
 //        gp.obj[9].worldX = 76 * gp.tileSize;

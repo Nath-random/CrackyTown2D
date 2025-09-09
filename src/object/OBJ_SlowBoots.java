@@ -4,19 +4,15 @@ import main.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;
+import entity.Entity;
 
-public class OBJ_SlowBoots extends SuperObject {
+public class OBJ_SlowBoots extends Entity {
     GamePanel gp;
 
     public OBJ_SlowBoots(GamePanel gp) {
-        this.gp = gp;
+        super(gp);
 
         name = "SlowBoots";
-        try {
-            image1 = ImageIO.read(getClass().getResourceAsStream("/objects/slowBoots1.png"));
-            image1 = uTool.scaleImage(image1, gp.tileSize, gp.tileSize);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        down1 = setupSprite("/objects/slowBoots1");
     }
 }

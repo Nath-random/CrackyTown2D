@@ -3,7 +3,6 @@ package main;
 import entity.Entity;
 import entity.Player;
 import enums.GameState;
-import object.SuperObject;
 import tile.TileManager;
 
 import javax.swing.JPanel;
@@ -11,6 +10,9 @@ import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class GamePanel extends JPanel implements Runnable{
     // DEBUG SETTINGS
@@ -59,9 +61,8 @@ public class GamePanel extends JPanel implements Runnable{
     // ENTITIES AND OBJECTS
     public Player player = new Player(this, keyH);
     public Entity[] npc = new Entity[1000];
-
-    public SuperObject[] obj = new SuperObject[15];
-
+    public Entity[] obj = new Entity[15];
+    public ArrayList<Entity> entityList = new ArrayList<>(); // render order (based on y-coordinate)
 
     public GamePanel() {
 
@@ -182,22 +183,37 @@ public class GamePanel extends JPanel implements Runnable{
             // TILES
             tileManager.draw(g2);//Layers: die Sachen werden aufeinander gezeichnet. Also muss player nachher kommen
 
-            //OBJECTS
-            for (int i = 0; i < obj.length; i++) {
-                if (obj[i] != null) {
-                    obj[i].draw(g2, this);
+
+            // RENDER ORDER FOR ENTITIES
+
+            entityList.add(player);
+            for (Entity entity : obj) {
+                if ( entity != null) {
+                    entityList.add(entity);
+                }
+            }
+            for (Entity entity : npc) {
+                if (entity != null) {
+                    entityList.add(entity);
                 }
             }
 
-            // NPC
-            for (int i = 0; i < npc.length; i++) {
-                if (npc[i] != null) {
-                    npc[i].draw(g2);
+            // sort by WorldY
+            Collections.sort(entityList, new Comparator<Entity>() {
+                @Override
+                public int compare(Entity o1, Entity o2) {
+                    return Integer.compare(o1.worldY, o2.worldY);
                 }
+            });
+
+            // DRAW ENTITIES
+            for (Entity entity : entityList) {
+                entity.draw(g2);
             }
 
-            // PLAYER
-            player.draw(g2);
+            // EMPTY ENTITY-LIST
+            entityList.clear();
+
 
             // UI
             ui.draw(g2);

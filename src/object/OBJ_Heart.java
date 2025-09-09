@@ -1,27 +1,23 @@
 package object;
 
+import entity.Entity;
 import main.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;
 
-public class OBJ_Heart extends SuperObject {
+public class OBJ_Heart extends Entity {
     GamePanel gp;
 
     public OBJ_Heart(GamePanel gp) {
-        this.gp = gp;
+        super(gp);
 
         name = "Heart";
-        try {
-            image1 = ImageIO.read(getClass().getResourceAsStream("/objects/heart1.png"));
-            image2 = ImageIO.read(getClass().getResourceAsStream("/objects/heart2.png"));
-            image3 = ImageIO.read(getClass().getResourceAsStream("/objects/heart3.png"));
-            image1 = uTool.scaleImage(image1, gp.tileSize, gp.tileSize);
-            image2 = uTool.scaleImage(image2, gp.tileSize, gp.tileSize);
-            image3 = uTool.scaleImage(image3, gp.tileSize, gp.tileSize);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        image1 = setupSprite("/objects/heart1");
+        image2 = setupSprite("/objects/heart2");
+        image3 = setupSprite("/objects/heart3");
+
+
     }
 }
 

@@ -3,12 +3,9 @@ package entity;
 import enums.GameState;
 import main.GamePanel;
 import main.KeyHandler;
-import main.UtilityTool;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 public class Player extends Entity {
 
@@ -69,36 +66,22 @@ public class Player extends Entity {
     }
 
     public void getPlayerImage() {
-        up1 = setupSprite("playerUp1");
-        up2 = setupSprite("playerUp2");
-        left1 = setupSprite("playerLeft1");
-        left2 = setupSprite("playerLeft2");
-        right1 = setupSprite("playerRight1");
-        right2 = setupSprite("playerRight2");
-        down1 = setupSprite("playerDown1");
-        down2 = setupSprite("playerDown2");
+        up1 = setupSprite("/player/playerUp1");
+        up2 = setupSprite("/player/playerUp2");
+        left1 = setupSprite("/player/playerLeft1");
+        left2 = setupSprite("/player/playerLeft2");
+        right1 = setupSprite("/player/playerRight1");
+        right2 = setupSprite("/player/playerRight2");
+        down1 = setupSprite("/player/playerDown1");
+        down2 = setupSprite("/player/playerDown2");
 
-        slowShoe = setupSprite("playerShoe1");
-        fastShoe = setupSprite("playerShoe2");
+        slowShoe = setupSprite("/player/playerShoe1");
+        fastShoe = setupSprite("/player/playerShoe2");
 
-        newPlayer = setupSprite("Wold1");
-        slime = setupSprite("slime1");
+        newPlayer = setupSprite("/player/Wold1");
+        slime = setupSprite("/player/slime1");
     }
 
-    public BufferedImage setupSprite(String imageName) {
-
-        UtilityTool uTool = new UtilityTool();
-        BufferedImage scaledImage = null;
-
-        try {
-            scaledImage = ImageIO.read(getClass().getResourceAsStream("/player/" + imageName + ".png"));
-            scaledImage = uTool.scaleImage(scaledImage, gp.tileSize, gp.tileSize);
-        } catch (IOException e) {
-            System.out.println("loading the player sprites went wrong :(");
-            e.printStackTrace();
-        }
-        return scaledImage;
-    }
 
     @Override
     public void update() {
@@ -360,11 +343,6 @@ public class Player extends Entity {
 
     }
 
-    //Player is the only Entity that doesn't need those
-    @Override
-    public void setAction() {
-
-    }
 
 
 }

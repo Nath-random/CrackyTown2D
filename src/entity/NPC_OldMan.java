@@ -24,32 +24,18 @@ public class NPC_OldMan extends Entity {
 
 
     public void getNPCImage() {
-        up1 = setupSprite("playerUp1");
-        up2 = setupSprite("playerUp2");
-        left1 = setupSprite("playerLeft1");
-        left2 = setupSprite("playerLeft2");
-        right1 = setupSprite("playerRight1");
-        right2 = setupSprite("playerRight2");
-        down1 = setupSprite("playerDown1");
-        down2 = setupSprite("playerDown2");
+        up1 = setupSprite("/npc/playerUp1");
+        up2 = setupSprite("/npc/playerUp2");
+        left1 = setupSprite("/npc/playerLeft1");
+        left2 = setupSprite("/npc/playerLeft2");
+        right1 = setupSprite("/npc/playerRight1");
+        right2 = setupSprite("/npc/playerRight2");
+        down1 = setupSprite("/npc/playerDown1");
+        down2 = setupSprite("/npc/playerDown2");
 
     }
 
 
-    public BufferedImage setupSprite(String imageName) {
-
-        UtilityTool uTool = new UtilityTool();
-        BufferedImage scaledImage = null;
-
-        try {
-            scaledImage = ImageIO.read(getClass().getResourceAsStream("/npc/" + imageName + ".png"));
-            scaledImage = uTool.scaleImage(scaledImage, gp.tileSize, gp.tileSize);
-        } catch (IOException e) {
-            System.out.println("loading the NPC sprites went wrong :(");
-            e.printStackTrace();
-        }
-        return scaledImage;
-    }
 
     public void setDialogue() {
         dialogues[0] = "Press Enter zum Quittieren!!\nThen talk to me again";

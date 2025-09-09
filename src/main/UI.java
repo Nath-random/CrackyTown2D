@@ -1,8 +1,8 @@
 package main;
 
+import entity.Entity;
 import enums.GameState;
 import object.OBJ_Heart;
-import object.SuperObject;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -61,7 +61,7 @@ public class UI {
         arial_80B = new Font("Arial", Font.BOLD, 80);
 
         // CREATE HUD OBJECT
-        SuperObject heart = new OBJ_Heart(gp);
+        Entity heart = new OBJ_Heart(gp);
         heart_full = heart.image1;
         heart_half = heart.image2;
         heart_blank = heart.image3;
@@ -224,6 +224,7 @@ public class UI {
 
     public void drawPauseScreen() {
         drawPlayerLife();
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 96F));
         String text = "Paused";
         int x = getCenteredTextX(text);
         int y = gp.screenHeight / 2;
