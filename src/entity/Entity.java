@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public abstract class Entity {
 
-    GamePanel gp;
+    public GamePanel gp;
     public int worldX, worldY;
     public int speed;
 
@@ -31,7 +31,7 @@ public abstract class Entity {
     //Animation für NPC
     public int npcActionCounter = 0; // zählt wie viele Frames er schon die gleiche action gemacht hat
     public int npcNextAction = 0;
-    boolean doNothing = false; //when a npc decides to not move
+    public boolean doNothing = false; //when a npc decides to not move
 
     //Dialog für NPC
     String[] dialogues = new String[20];
@@ -40,6 +40,8 @@ public abstract class Entity {
     //Character Status
     public int maxLife;
     public int life;
+    public boolean invincible = false;
+    public int invFrames = 0;
 
     //Für Objects
     public BufferedImage image1, image2, image3;
@@ -61,7 +63,10 @@ public abstract class Entity {
         gp.cChecker.checkObject(this, false);
         //Check if this entity hits the player
         gp.cChecker.checkPlayer(this);
-
+        //Check if this entity hits a NPC
+        gp.cChecker.checkEntity(this, gp.npc);
+        //Check if this entity hits a monster
+        gp.cChecker.checkEntity(this, gp.monster);
 
 
         // Can only move is collision is false
